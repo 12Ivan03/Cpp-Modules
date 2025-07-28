@@ -39,6 +39,8 @@ void PhoneBook::searchContacts() const {
 	std::string str;
 	int index;
 
+	if (contactCount == 0)
+		return;
 	std::cout << "Enter the index of the contact you want to view: ";
 	std::getline(std::cin, str);
 	if (std::cin.eof()) {
