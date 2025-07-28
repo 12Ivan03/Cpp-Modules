@@ -1,18 +1,16 @@
 #include <iostream>
 #include "PhoneBook.hpp"
 
-using namespace std;
-
 int main() {
 	PhoneBook phoneBook;
-	string command;
+	std::string command;
 
 	while (1)
 	{
-		cout <<"Enter command (ADD< SEARCH< EXIT): ";
-		getline(cin, command);
+		std::cout <<"Enter command (ADD< SEARCH< EXIT): ";
+		getline(std::cin, command);
 
-		if (cin.eof())
+		if (std::cin.eof())
 			break;
 
 		if (command == "ADD") {
@@ -22,7 +20,7 @@ int main() {
 		} else if (command == "EXIT") {
 			break;
 		} else {
-			cout << "Invalid command." << endl;
+			std::cout << "Invalid command." << std::endl;
 		}
 	}
 

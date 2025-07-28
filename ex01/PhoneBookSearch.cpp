@@ -41,6 +41,10 @@ void PhoneBook::searchContacts() const {
 
 	std::cout << "Enter the index of the contact you want to view: ";
 	std::getline(std::cin, str);
+	if (std::cin.eof()) {
+		std::cout << "Input terminated." << std::endl;
+		exit(0);
+	}
 	index = extractNum(str) - 1;
 	displayContactByIndex(index);
 }

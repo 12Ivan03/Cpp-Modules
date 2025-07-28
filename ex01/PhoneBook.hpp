@@ -7,6 +7,8 @@
 #include <string>
 #include <iomanip>
 
+# define WHITE_SPACE " \t\n\r\f\v"
+
 class PhoneBook {
 	private:
 		Contact contacts[8];

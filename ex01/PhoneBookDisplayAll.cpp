@@ -1,20 +1,18 @@
 #include "PhoneBook.hpp"
 
-using namespace std;
-
 void putBase() {
-	cout << "\nDisplaying all contacts:" << endl;
-	cout << " ------------------------------------------- " << endl;
-	cout << "|     Index|First Name| Last Name|  nickname|" << endl;
-	cout << " ------------------------------------------- " << endl;
+	std::cout << "\nDisplaying all contacts:" << std::endl;
+	std::cout << " ------------------------------------------- " << std::endl;
+	std::cout << "|     Index|First Name| Last Name|  nickname|" << std::endl;
+	std::cout << " ------------------------------------------- " << std::endl;
 }
 
-void	printTableCalumn(string str) {
+void	printTableCalumn(std::string str) {
 
 	if (str.length() > 10)
-		cout << str.substr(0, 9) << ".|";
+		std::cout << str.substr(0, 9) << ".|";
 	else
-		cout << setw(10) << str << "|";
+		std::cout << std::setw(10) << str << "|";
 }
 
 void PhoneBook::displayAllContact() const {
@@ -25,18 +23,18 @@ void PhoneBook::displayAllContact() const {
 	putBase();
 
 	if (contactCount == 0) {
-		cout << "|                  This phone book is empty.|" << endl;
-		cout << " ------------------------------------------- \n" << endl;
+		std::cout << "|                  This phone book is empty.|" << std::endl;
+		std::cout << " ------------------------------------------- \n" << std::endl;
 		return;
 	};
 
 	for (int i = 0; i < limit; ++i) {
-		cout << "|         " << i + 1 << "|";
+		std::cout << "|         " << i + 1 << "|";
 		printTableCalumn(contacts[i].getFirstName());
 		printTableCalumn(contacts[i].getLastName());
 		printTableCalumn(contacts[i].getNickname());
-		cout << endl;
-		cout << " ------------------------------------------- " << endl;
+		std::cout << std::endl;
+		std::cout << " ------------------------------------------- " << std::endl;
 	};
-	cout << endl;
+	std::cout << std::endl;
 }

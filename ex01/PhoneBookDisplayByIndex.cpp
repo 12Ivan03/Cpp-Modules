@@ -1,24 +1,22 @@
 
 #include "PhoneBook.hpp"
 
-using namespace std;
-
-void	printFullContantInfo(string table, string str) {
-	cout << table << str << endl;
-	cout << " ------------------------------------------- " << endl;
+void	printFullContantInfo(std::string table, std::string str) {
+	std::cout << table << str << std::endl;
+	std::cout << " ------------------------------------------- " << std::endl;
 }
 
 void	putFullBase(int index) {
-	cout << "\nDisplaying contact details:" << endl;
-	cout << " ------------------------------------------- " << endl;
-	cout << "|         Index| " << index << endl;
-	cout << " ------------------------------------------- " << endl;
+	std::cout << "\nDisplaying contact details:" << std::endl;
+	std::cout << " ------------------------------------------- " << std::endl;
+	std::cout << "|         Index| " << index << std::endl;
+	std::cout << " ------------------------------------------- " << std::endl;
 }
 
 void	PhoneBook::displayContactByIndex(int index) const {
 
 	if (contacts[index].getFirstName().empty()) {
-		cout << "No contact found at that index " << index + 1 << "." << endl;
+		std::cout << "No contact found at that index " << index + 1 << "." << std::endl;
 		return;
 	}
 	putFullBase(index + 1);
@@ -27,7 +25,5 @@ void	PhoneBook::displayContactByIndex(int index) const {
 	printFullContantInfo("|      nickname| " , contacts[index].getNickname());
 	printFullContantInfo("|  Phone Number| " , contacts[index].getPhoneNumber());
 	printFullContantInfo("|Darkest Secret| " , contacts[index].getDarkestSecret());
-	cout << endl;
-	cout << " ------------------------------------------- " << endl;
-
+	std::cout << std::endl;
 }

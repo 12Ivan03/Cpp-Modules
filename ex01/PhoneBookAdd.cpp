@@ -2,31 +2,65 @@
 #include <iostream>
 #include "PhoneBook.hpp"
 
-using namespace std;
-
 PhoneBook::PhoneBook() : contactCount(0) {}
 
-bool	isEmpty(string &str) {
+void innetTrim(std::string &str) {
+	int j = 0;
+	int eraseFromStr = 0;
+
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] && str[i] == ' ') {
+			j = i;
+			while (j < str.length() && str[j] == ' ')
+				j++;
+			eraseFromStr = j - i - 1;
+			if (eraseFromStr)
+				str.erase(i + 1, eraseFromStr);
+			i++;
+		}
+	}
+}
+
+void edgeTrimStr(std::string &str) {
+
+	int start = str.find_first_not_of(WHITE_SPACE);
+	if (start == std::string::npos) {
+		str.clear();
+		return;
+	}
+	int end = str.find_last_not_of(WHITE_SPACE);
+	str = str.substr(start, end - start + 1);
+}
+
+bool	isEmpty(std::string &str) {
+
+	edgeTrimStr(str);
+	innetTrim(str);
 	if (str.empty()) {
-		cout << "This filed cannot be empty." << endl;
+		std::cout << "This filed cannot be empty." << std::endl;
 		return true;
 	}
 	return false;
 }
 
-void	askForInput(string &str, const string &prompt) {
+void	askForInput(std::string &str, const std::string &prompt) {
 
-	cout << prompt;
-	getline(cin, str);
+	std::cout << prompt;
+	getline(std::cin, str);
+
+	if (std::cin.eof()) {
+		std::cout << "Input terminated." << std::endl;
+		exit(0);
+	}
 
 	while (isEmpty(str)) {
-		cout << prompt;
-		getline(cin, str);
+		std::cout << prompt;
+		getline(std::cin, str);
 	}
 }
 
 void	PhoneBook::addContact() {
-	string fName, lName, nName, pNumber, dSecret;
+	std::string fName, lName, nName, pNumber, dSecret;
 
 	askForInput(fName, "Enter first name: ");
 	askForInput(lName, "Enter last name: ");
@@ -36,6 +70,6 @@ void	PhoneBook::addContact() {
 
 	contacts[contactCount % 8].setContactDetails(fName, lName, nName, pNumber, dSecret);
 	contactCount++;
-	cout << "\nContact added successfully!\n" << endl;
+	std::cout << "\nContact added successfully!\n" << std::endl;
 }
 
