@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cctype>
 
 int main(int argc, char **argv) {
 
@@ -9,10 +10,7 @@ int main(int argc, char **argv) {
 
 			for (int j = 0; str[j] != '\0'; j++) {
 				char c = str[j];
-
-				if (c >= 'a' && c <='z') {
-					c -= 32;
-				}
+				c = std::toupper(c);
 				std::cout << c;
 			}
 
