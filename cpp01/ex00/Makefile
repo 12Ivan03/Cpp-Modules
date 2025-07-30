@@ -7,7 +7,7 @@ newZombie.cpp\
 randomChump.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = zombie
+NAME = BraiiiiiiinnnzzzZ
 
 all: $(NAME)
 

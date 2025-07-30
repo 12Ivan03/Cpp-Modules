@@ -12,7 +12,7 @@ int main() {
     delete heapZombie;
     heapZombie = nullptr;
 
-    randomChump("Siven");
+    randomChump("Steven");
 
     return 0;
 }
