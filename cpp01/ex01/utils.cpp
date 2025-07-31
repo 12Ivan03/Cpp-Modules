@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 13:47:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 16:32:22 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:44:34 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 // *** // Helper functions for the finctiosn bellow // *** //
 
 int	checkNumber(int num) {
+	
 	if (num <= 0)
 		return -1;
-	if (num > INT_MAX)
+	if (num > 100000)
 		return -1;
 	return (num);
 }
@@ -27,9 +28,11 @@ int	getNumber(std::string argvOne) {
 
 	std::stringstream ss(argvOne);
 	if (ss >> num && ss.eof())
-		if (checkNumber(num))
-			return (num);
-	return -1;
+	{
+		if (checkNumber(num) == -1)
+			return (-1);
+	}
+	return num;
 }
 
 bool checkName(std::string name) {

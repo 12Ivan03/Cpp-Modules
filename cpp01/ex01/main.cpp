@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:46:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 16:40:51 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:35:34 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ int	main(int argc, char **argv) {
 	std::string name {};
 	Zombie* newZombies {};
 
-	if (argc == 3) {
-		if (evalArguments(N ,name, argv))
-		{
-			newZombies = zombieHorde(N, name);
-			announceZombies(newZombies, N);
-			delete[] newZombies;
-		}
-	} else
+	if (argc != 3) {
 		error_handler(3);
+		return 1;
+	}
+	if (evalArguments(N ,name, argv))
+	{
+		newZombies = zombieHorde(N, name);
+		announceZombies(newZombies, N);
+		delete[] newZombies;
+	} else
+		return 1;
 
 	return 0;
 }
