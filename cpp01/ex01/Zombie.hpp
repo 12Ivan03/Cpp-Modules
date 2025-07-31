@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:16:15 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 16:37:14 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/07/31 16:42:19 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 class Zombie {
 
 	private: 
-		std::string z_name;
+		std::string z_name {};
 
 	public:
 		Zombie();
