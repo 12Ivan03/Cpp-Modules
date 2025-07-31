@@ -6,11 +6,13 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 13:47:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 16:26:23 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/07/31 16:32:22 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
+
+// *** // Helper functions for the finctiosn bellow // *** //
 
 int	checkNumber(int num) {
 	if (num <= 0)
@@ -44,6 +46,8 @@ bool checkName(std::string name) {
 
 	return true;
 }
+
+// *** // Functions called from main.cpp to validate arguments // *** //
 
 bool	evalArguments(int &N, std::string &name, char *argv[]) {
 			

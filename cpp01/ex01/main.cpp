@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:46:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 16:23:25 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/07/31 16:40:51 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ int	main(int argc, char **argv) {
 			announceZombies(newZombies, N);
 			delete[] newZombies;
 		}
-	} else {
+	} else
 		error_handler(3);
-	}
 
 	return 0;
 }
-

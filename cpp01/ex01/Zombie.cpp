@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:16:08 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 16:25:53 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/07/31 16:37:24 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Zombie::Zombie() {};
 
 Zombie::~Zombie() {
-	std::cout << "   Zombie is destrpyed!" << std::endl;
+	std::cout << "   Zombie " << getName() << " is destrpyed!" << std::endl;
 }
 
 void	Zombie::announce() {
@@ -23,9 +23,9 @@ void	Zombie::announce() {
 }
 
 void	Zombie::setName(std::string name) {
-	this->name = name;
+	this->z_name = name;
 }
 
 std::string Zombie::getName() const {
-	return name;
+	return z_name;
 }
