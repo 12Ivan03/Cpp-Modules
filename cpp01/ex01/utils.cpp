@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 13:47:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 17:44:34 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:46:45 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ int	getNumber(std::string argvOne) {
 
 	std::stringstream ss(argvOne);
 	if (ss >> num && ss.eof())
-	{
 		if (checkNumber(num) == -1)
 			return (-1);
-	}
 	return num;
 }
 
