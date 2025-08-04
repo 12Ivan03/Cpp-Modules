@@ -12,26 +12,24 @@
 
 #include "Zombie.hpp"
 
-// *** // Helper functions for the finctiosn bellow // *** //
+// *** // Helper functions for the finctions bellow // *** //
 
-int	checkNumber(int num) {
+long long	checkNumber(long long num) {
 	
-	if (num <= 0)
-		return -1;
-	if (num > 100000)
+	if (num <= 0 || num > INT_MAX)
 		return -1;
 	return (num);
 }
 
 int	getNumber(std::string argvOne) {
 	
-	int num;
+	long long num;
 
 	std::stringstream ss(argvOne);
 	if (ss >> num && ss.eof())
 		if (checkNumber(num) == -1)
 			return (-1);
-	return num;
+	return (int)num;
 }
 
 bool checkName(std::string name) {

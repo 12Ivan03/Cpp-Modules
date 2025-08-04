@@ -17,6 +17,7 @@
 #include <sstream>
 #include <string>
 #include <limits.h>
+#include <climits>
 
 # define WHITE_SPACE " \t\n\r\f\v"
 
