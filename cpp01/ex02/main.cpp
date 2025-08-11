@@ -18,9 +18,9 @@ int main() {
     std::string *stringPTR = &str;
     std::string &stringREF = str;
 
-    std::cout << std::endl << "Memory address of a string on the stack:     " << &str << std::endl;
-    std::cout << "Memory address of a pointer:                 " << stringPTR << std::endl;
-    std::cout << "Memory address of a reference:               " << &stringREF << std::endl << std::endl;
+    std::cout << std::endl << "The memory address of a string on the stack:     " << &str << std::endl;
+    std::cout << "The memory address of a pointer:                 " << stringPTR << std::endl;
+    std::cout << "The memory address of a reference:               " << &stringREF << std::endl << std::endl;
 
     std::cout << "The value of a string on the stack:          " << str << std::endl;
     std::cout << "The value of a pointer:                      "  << *stringPTR << std::endl;
