@@ -7,8 +7,13 @@
 #include <sstream>
 #include <string>
 
-bool readFileToString(std::string fileName, std::string &content);
-bool convertContent(std::string content, const std::string &s1, const std::string &s2, std::string &newContent);
-bool createWriteNewFile(std::string fileName, std::string newContent);
+bool    readFileToString(std::string fileName, std::string &content);
+bool    convertContent(std::string content, const std::string &s1, const std::string &s2, std::string &newContent);
+bool    createWriteNewFile(std::string fileName, std::string newContent);
+
+void    cuccessMessage(std::string str);
+
+int     errorHandlerInt(int er);
+bool    errorHandler(int er, std::string str);
 
 #endif

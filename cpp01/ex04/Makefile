@@ -2,7 +2,8 @@ CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror
 
 SRC_FILES = main.cpp \
-utils.cpp
+utils.cpp \
+errorHandler.cpp \
 
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)

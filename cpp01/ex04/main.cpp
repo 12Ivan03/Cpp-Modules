@@ -21,10 +21,8 @@ bool    analizeInputProgram(char *argv[]) {
 
 int main(int argc, char *argv[]) {
 
-    if (argc != 4) {
-        std::cout << "Incurrect input.\n\nExample valid input:\n./program fileName \"s1\" \"s2\"" << std::endl;
-        return 1;
-    }
+    if (argc != 4)
+        return errorHandlerInt(1);
     if (!analizeInputProgram(argv))
         return 1;
     return 0;
