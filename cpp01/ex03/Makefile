@@ -1,11 +1,13 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror
 
-SRC_FILES = main.cpp 
-
+SRC_FILES = main.cpp \
+HumanA.cpp \
+HumanB.cpp \
+Weapon.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = BraiiiiiiinnnzzzZ
+NAME = violence
 
 all: $(NAME)
 
