@@ -1,11 +1,11 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror
 
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp Harl.cpp
 
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = 
+NAME = harlComaplin
 
 all: $(NAME)
 
