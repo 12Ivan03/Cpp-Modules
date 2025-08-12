@@ -1,16 +1,22 @@
 
 #include "Harl.hpp"
 
-int main(int argc, char *argv[]) {
-
-    if (argc != 2) {
-        std::cout << "Error: Invalid number of arguments." << std::endl;
-        return 1;
-    }
-    
+int main() {
     Harl harl;
-    std::string level = argv[1];
-    harl.complain(level);
+
+    std::string posLevels[5] = {
+        "DEBUG",
+        "INFO",
+        "WARNING",
+        "ERROR",
+        "UNKNOWN"
+    };
+
+    for (int i = 0; i < 5; i++) {
+        std::cout << "Complain level: " << posLevels[i] << std::endl;
+        harl.complain(posLevels[i]);
+        std::cout << std::endl;
+    }
 
     return 0;
 }
