@@ -10,7 +10,7 @@ bool createWriteNewFile(std::string fileName, std::string newContent) {
     outputFile.close();
 
     cuccessMessage(fileName);
-    
+
     return true;
 }
 
@@ -29,7 +29,8 @@ bool readFileToString(std::string fileName, std::string &content) {
     return true;
 }
 
-bool convertContent(std::string content, const std::string &s1, const std::string &s2, std::string &newContent) {
+bool convertContent(std::string content, const std::string &s1, \
+                    const std::string &s2, std::string &newContent) {
 
     size_t pos = 0;
 
@@ -39,7 +40,7 @@ bool convertContent(std::string content, const std::string &s1, const std::strin
     while ((pos = content.find(s1, pos)) != std::string::npos) {
         content.erase(pos, s1.length());
         content.insert(pos, s2);
-        pos += s2.length();;
+        pos += s2.length();
     }
     newContent = content;
 
