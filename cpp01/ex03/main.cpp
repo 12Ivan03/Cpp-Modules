@@ -32,5 +32,10 @@ int main()
         jim.attack();
     }
 
+    {
+        HumanB jim("Josh");
+        jim.attack();
+    }
+
     return 0;
 }

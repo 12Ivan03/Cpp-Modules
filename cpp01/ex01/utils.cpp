@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 13:47:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 17:47:11 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/08/18 11:53:27 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,23 @@
 
 long long	checkNumber(long long num) {
 	
-	if (num <= 0 || num > INT_MAX)
+	if (num <= 0 || num >= 100001)
 		return -1;
 	return (num);
 }
 
 int	getNumber(std::string argvOne) {
 	
-	long long num;
-
+	long long num = 0;
+	
 	std::stringstream ss(argvOne);
-	if (ss >> num && ss.eof())
+	if (ss >> num && ss.eof()) {
 		if (checkNumber(num) == -1)
-			return (-1);
+			return -1;	
+	} else {
+		std::cout << "Error: Invalid number format." << std::endl;
+		return 0;
+	}
 	return (int)num;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:46:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/07/31 17:35:34 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/08/18 11:15:10 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv) {
 
-	int N {0};
+	int N = 0;
 	std::string name {};
 	Zombie* newZombies {};
 

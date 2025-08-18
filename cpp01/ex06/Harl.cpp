@@ -41,56 +41,22 @@ int findLevelInt(std::string level) {
     return -1;
 }
 
-// if neccessary remove this functions and from the class and use the unelegant switch statement. :) 
-void    Harl::printLevels(int level) {
-
-    void (Harl::*ptrFun[])() = {
-        &Harl::debug,
-        &Harl::info,
-        &Harl::warning,
-        &Harl::error
-    };
-
-    while (level <  4)
-        (this->*ptrFun[level++])();
-
-}
-
 void Harl::complain(std::string level) {
 
     int levelInt = findLevelInt(level);
 
     switch(levelInt) {
         case 0: 
-            printLevels(levelInt);
-            break;
+            debug();
         case 1:
-            printLevels(levelInt);
-            break;
+            info();
         case 2:
-            printLevels(levelInt);
-            break;
+            warning();
         case 3:
-            printLevels(levelInt);
+            error();
             break;
         default:
             std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
     }
 }
 
-// switch(levelInt) {
-//     case 0: 
-//         this->debug(), this->info(), this->warning(), this->error();
-//         break;
-//     case 1:
-//         this->info(), this->warning(), this->error();
-//         break;
-//     case 2:
-//         this->warning(), this->error();
-//         break;
-//     case 3:
-//         this->error();
-//         break;
-//     default:
-//         std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
-// }

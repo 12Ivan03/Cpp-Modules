@@ -14,8 +14,7 @@ class Harl {
 
     public: 
         void complain(std::string level);
-        void printLevels(int level);
-        
+      
 };
 
 #endif 
