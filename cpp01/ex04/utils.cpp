@@ -34,8 +34,8 @@ bool convertContent(std::string content, const std::string &s1, \
 
     size_t pos = 0;
 
-    if ( s1.empty() )
-        return errorHandler(3, NULL);
+    if (s1.empty())
+        return errorHandler(3, "");
 
     while ((pos = content.find(s1, pos)) != std::string::npos) {
         content.erase(pos, s1.length());

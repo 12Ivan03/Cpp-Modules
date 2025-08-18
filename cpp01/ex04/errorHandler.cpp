@@ -2,7 +2,7 @@
 #include "myHeader.hpp"
 
 bool errorHandler(int er, std::string str) {
-
+    
     if (er == 1)
        std::cerr << "Error: Cannot open file: '" << str << "' check if file name is currect." << std::endl;
     else if (er == 2)

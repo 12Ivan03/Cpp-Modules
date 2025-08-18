@@ -6,7 +6,7 @@
 #    By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 11:56:44 by ipavlov           #+#    #+#              #
-#    Updated: 2025/08/18 11:56:45 by ipavlov          ###   ########.fr        #
+#    Updated: 2025/08/18 16:55:00 by ipavlov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,10 @@ NAME = memoryAddresses
 all: $(NAME)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(OBJ_FILES) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ_FILES) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJ_FILES)
