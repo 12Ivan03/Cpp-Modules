@@ -1,22 +1,16 @@
 
 #include "Harl.hpp"
 
-int main() {
-    Harl harl;
+int main(int argc, char **argv) {
 
-    std::string posLevels[5] = {
-        "DEBUG",
-        "INFO",
-        "WARNING",
-        "ERROR",
-        "UNKNOWN"
-    };
-
-    for (int i = 0; i < 5; i++) {
-        std::cout << "Complain level: " << posLevels[i] << std::endl;
-        harl.complain(posLevels[i]);
-        std::cout << std::endl;
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <level>" << std::endl;
+        return 1;
     }
+
+    Harl harl;
+    std::string level = argv[1];
+    harl.complain(level);
 
     return 0;
 }
