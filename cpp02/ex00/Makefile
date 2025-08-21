@@ -2,10 +2,10 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g
 
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp Fixed.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = 
+NAME = occf
 
 all: $(NAME)
 
@@ -16,10 +16,10 @@ $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(OBJ_FILES) -o $(NAME)
 
 clean:
-	rm -rf $(OBJ_FILES)
+	@rm -rf $(OBJ_FILES)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

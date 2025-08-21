@@ -10,21 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fixed.hpp"
+#ifndef FIXED_HPP
+#define FIXED_HPP
 
-int	main() {
+#include <iostream>
+#include <cmath>
 
-	Fixed a;
-	Fixed b( a );
-	Fixed c;
+class Fixed {
 
-	c = b;
-	
-	std::cout << a.getRawBits() << std::endl;
-	std::cout << b.getRawBits() << std::endl;
-	std::cout << c.getRawBits() << std::endl;
+	private: 
+		int 				_value;
+		static const int	_fractionalBits;
 
-	// std::cout << "Fractional Bites: " << Fixed::getFractionalBits() << std::endl;
+	public:
+		Fixed();
+		Fixed(const Fixed &other);
+		Fixed &operator=(const Fixed &other);
+		~Fixed();
 
-	return 0;
-}
+		Fixed(const int value);
+		Fixed(const float value);
+
+		int		getRawBits( void ) const;
+		void	setRawBits(const int value);
+
+		float toFloat( void ) const;
+		int toInt( void ) const;
+};
+
+std::ostream& operator<<(std::ostream &oStream, const Fixed &fx);
+
+#endif

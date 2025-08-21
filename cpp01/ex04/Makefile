@@ -5,7 +5,6 @@ SRC_FILES = main.cpp \
 utils.cpp \
 errorHandler.cpp \
 
-
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 NAME = reWriteFileContent
 

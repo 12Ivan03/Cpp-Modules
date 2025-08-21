@@ -10,3 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FIXED__HPP
+#define FIXED__HPP
+
+#include <iostream>
+
+class Fixed {
+
+	private:
+		int					_value;
+		static const int	_fractionalBits;
+
+    public:
+		Fixed();
+		Fixed(const Fixed &other); // copy constructor
+		Fixed &operator=(const Fixed &other); // assignment operatior overload
+		~Fixed();
+		int		getRawBits( void ) const;
+		void	setRawBits( int const value );
+		// static int	getFractionalBits();
+};
+
+#endif

@@ -66,6 +66,9 @@
         "span": "cpp",
         "iomanip": "cpp",
         "sstream": "cpp",
-        "fstream": "cpp"
-    }
+        "fstream": "cpp",
+        "complex": "cpp"
+    },
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
 }
