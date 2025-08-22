@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:14:09 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/19 18:14:10 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/08/22 11:14:40 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ Fixed::~Fixed() {
 	std::cout << "Destructor called" << std::endl;
 };
 
-// ~~--~~--`` Good practice ``--~~--~~//
+// ~~--~~--``` Good practice ```--~~--~~//
 
 int		Fixed::getRawBits( void ) const {
 	return _value;
@@ -78,14 +78,16 @@ float	Fixed::toFloat( void ) const {
 };
 
 /* 
-	Calculation: 
-
+	Calculating the delta and error (epsilon) for float to Fixed conversion:
+	1 << _fractionalBits = 256 ; // 2^8 
+	1 << _fractionalBits = 2^8 = 256 ;
+	
 		2(8) = 256 ;
 		1/256 = delta = 0.00390625 ;
 		error <= delta / 2 ;
 */
 
-// ~~--~~--~~--~~--~~ Change operation ~~--~~--~~--~~--~~ //
+// ~~--~~--~~--~~--~~ Overload operator ~~--~~--~~--~~--~~ //
 
 std::ostream& operator<<(std::ostream &oStream, const Fixed &fx) {
 	return oStream << fx.toFloat();
