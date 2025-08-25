@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:31:28 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/22 17:47:34 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/08/25 15:14:35 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@
 	Fixed Fixed::operator+(const Fixed &other) const {
 		
 		Fixed result;
-		result._value = this->_value + other._value;
+		result.setBits(this->_value + other._value);
 
 		return result;
 	};
@@ -118,48 +118,100 @@
 	Fixed Fixed::operator-(const Fixed &other) const {
 		
 		Fixed result;
-		result._value = this->_value - other._value;
+		result.setBits(this->_value - other._value);
 		
 		return result;
 	};
-
-
-	/* 
-		Va X Vb = (A-real X 2^f)(B-real X 2^f) = (A-real X B-real) X 2^2f 
-		== Va X Vb / _fractionBits
-	*/ 
+	
 	Fixed Fixed::operator*(const Fixed &other) const {
 		
-		long long	classValue = static_cast<long long>(this->_value);
-		long long	theOtherValue = static_cast<long long>(other._value); 
+		long long	thisValue = static_cast<long long>(this->_value);
+		long long	otherValue = static_cast<long long>(other._value); 
 		long long	numResult;
 		Fixed		result;
 
-		numResult = classValue * theOtherValue;
-		result._value = static_cast<int>(numResult >> _fractionalBits);
+		numResult = thisValue * otherValue;
+		result.setBits(static_cast<int>(numResult >> _fractionalBits));
 		
 		return result;
 	};
 
-	/*
-		((A x 2^f) << f ) / (B x 2^f)
-		= (A x 2^f x 2^f) / (B x 2^f)
-		= (A/B) x 2^f
-	*/
 	Fixed Fixed::operator/(const Fixed &other) const {
 		
-		long long	classValue = static_cast<long long>(this->_value);
-		long long	theOtherValue = static_cast<long long>(other._value);
+		long long	thisValue = static_cast<long long>(this->_value);
+		long long	otherValue = static_cast<long long>(other._value);
 		long long	resultValue;
 		Fixed		result;
 
-		if (theOtherValue == 0)
+		if (otherValue == 0)
 			return result;
 
-		resultValue = (classValue << _fractionalBits) / theOtherValue;
-		result._value = static_cast<int>(resultValue);
-		
+		resultValue = (thisValue << _fractionalBits) / otherValue;
+		result.setBits(static_cast<int>(resultValue));
+
 		return result;
+	};
+
+	// Pre ++a & --a; 
+
+	Fixed& Fixed::operator++() {
+		
+		this->_value += 1;
+		return *this;	
+	};
+
+	Fixed& Fixed::operator--() {
+		
+		this->_value -= 1;
+		return *this;
+	};
+
+	// Post a++ & a--
+
+	Fixed Fixed::operator++(int) {
+		
+		Fixed cpyValue(*this);
+		++this->_value;
+		return cpyValue;
+	};
+
+	Fixed Fixed::operator--(int) {
+
+		Fixed cpyValue(*this);
+		--this->_value;
+		return cpyValue;
+	};
+
+	// Min 
+	
+	Fixed& Fixed::min(Fixed &a, Fixed &b) {
+		
+		if (a._value > b._value)
+			return b;
+		return a;
+	};
+
+	const Fixed& Fixed::min(const Fixed &a, const Fixed &b) {
+		
+		if (a._value > b._value)
+			return b;
+		return a;
+	};
+
+	// Max
+
+	Fixed& Fixed::max(Fixed &a, Fixed &b) {
+		
+		if (a._value < b._value)
+			return b;
+		return a;
+	};
+
+	const Fixed& Fixed::max(const Fixed &a, const Fixed &b) {
+		
+		if (a._value < b._value)
+			return b;
+		return a;
 	};
 
 
