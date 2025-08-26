@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Foxed.cpp                                          :+:      :+:    :+:   */
+/*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:14:05 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/19 18:14:06 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/08/26 11:25:53 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ Fixed::Fixed() : _value(0) {
 Fixed::Fixed(const Fixed &other) {
 
 	std::cout << "Copy constructor called" << std::endl;
-	this->_value = other._value;
+	this->_value = other.getRawBits();
 };
 
 Fixed& Fixed::operator=(const Fixed &other) {
@@ -48,7 +48,3 @@ void	Fixed::setRawBits( int const value ) {
 	std::cout << "setRawBits member functions called" << std::endl;
 	this->_value = value;
 };
-
-// int		Fixed::getFractionalBits() { 
-// 	return _fractionalBits; 
-// };

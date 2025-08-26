@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:14:08 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/19 18:14:09 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/08/26 11:25:59 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ class Fixed {
 		~Fixed();
 		int		getRawBits( void ) const;
 		void	setRawBits( int const value );
-		// static int	getFractionalBits();
 };
 
 #endif
