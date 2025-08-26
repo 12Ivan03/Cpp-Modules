@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:31:23 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/25 15:18:33 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/08/26 11:43:45 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,23 +117,28 @@ int main( void ) {
 
 		Fixed aa(3.14159265359f);
 		Fixed bb(2.71f);
-		std::cout << Fixed::max(aa, bb) << std::endl;
+		std::cout << Fixed::max(aa, bb) << std::endl << std::endl;
 		
-		std::cout << std::endl;
+		std::cout << "Copy example from PDF subject" << std::endl << std::endl;
 	
 	}
 
 	// PDF subject example suggestion. 
 	{
-		Fixed a;
-		Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+		
+		Fixed 			a;
+		Fixed const 	b( Fixed( 5.05f ) * Fixed( 2 ) );
+		
 		std::cout << a << std::endl;
 		std::cout << ++a << std::endl;
 		std::cout << a << std::endl;
 		std::cout << a++ << std::endl;
 		std::cout << a << std::endl;
+		
 		std::cout << b << std::endl;
+
 		std::cout << Fixed::max( a, b ) << std::endl;
+		
 		return 0;
 	}
 	
