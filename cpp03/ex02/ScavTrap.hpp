@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/29 11:57:06 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 15:23:35 by ipavlov          ###   ########.fr       */
+/*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
+/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class ScavTrap : public ClapTrap {
 
 		void	attack(const std::string &target);
 		void	gateKeeper();
+
 };
 
 #endif

@@ -2,7 +2,7 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g
 
-SRC_FILES = main.cpp ClapTrap.cpp ScavTrap.cpp
+SRC_FILES = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 NAME = a.out

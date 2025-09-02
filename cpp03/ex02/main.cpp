@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/29 11:57:02 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 13:49:11 by ipavlov          ###   ########.fr       */
+/*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
+/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main() {
-	
+
 	std::cout << "=== Creating ClapTrap ===" << std::endl;
     ClapTrap clap("Koko");
     clap.attack("other dogs");
@@ -33,19 +34,19 @@ int main() {
     scav3 = scav2;
     scav2.gateKeeper();
 
+	FragTrap frag("One");
+    frag.takeDamage(40);
+
+    FragTrap frag007(frag);
+
+    frag007.attack("frag");
+    frag007.attack("frag123");
+    frag007.attack("frag321");
+    frag007.attack("frag231");
+    frag007.attack("frag132");
+    
+
     std::cout << "\n=== Destructors Called ===" << std::endl;
 
-    // {
-    //     ClapTrap clap("Chris");
-    //     ScavTrap scav("Chris");
-
-    //     clap.attack("target3"); // -> ClapTrap Chris attacks target3, causing 20 points of damage!
-    //     scav.attack("target3"); // -> ScavTrap Chris attacks target3, causing 20 points of damage!
-
-    //     ClapTrap* poly = new ScavTrap("Chris");
-    //     poly->attack("target3"); // with virtual: ScavTrap ... (dynamic)
-    //     delete poly;
-    // }
-	
 	return 0;
 }

@@ -10,76 +10,71 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ClapTrap.hpp"
 
 // --~~--~~--~~--~~--~~ OCcF ~~--~~--~~--~~--~~--//
 
 ClapTrap::ClapTrap() {};
 
-ClapTrap::ClapTrap(const ClapTrap &other) : 
+ClapTrap::ClapTrap(const ClapTrap &other) :
 	_name(other._name),
 	_health(other._health),
-	_damage(other._damage),
-	_energy(other._energy) {};
+	_energy(other._energy),
+	_damage(other._damage) {};
 
 ClapTrap& ClapTrap::operator=(const ClapTrap &other) {
-	
+
 	if (this != &other) {
-		this->_name = other._name;
-		this->_health = other._health;
-		this->_damage = other._damage;
-		this->_energy = other._energy;
+		_name = other._name;
+		_health = other._health;
+		_damage = other._damage;
+		_energy = other._energy;
 	}
 	return *this;
 };
 
 ClapTrap::~ClapTrap() {};
 
-ClapTrap::ClapTrap(std::string name) : _name(name) {};
+ClapTrap::ClapTrap(const std::string name) : _name(name) {};
 
 
 // --~~--~~--~~--~~--~~ Action ~~--~~--~~--~~--~~--//
 
 void	ClapTrap::attack(const std::string &target) {
-
 	if (!getEnergy())
 		return printfErrorMsg(_name + "'s energy is 0", this->_name);
 	setEnergy(getEnergy() - 1);
 	
-	printMessage(_name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!", "ClapTrap ");
+	printMessage( "ClapTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");
 	
 };
 
 void	ClapTrap::takeDamage(unsigned int amount) {
-	
 	if (getHealth() == 0)
-		return printMessage(_name + " is already dead!", "ClapTrap ");
+		return printMessage("ClapTrap ", _name + " is already dead!");
 	
 	if (getHealth() < amount) {
 		setHealth(0);
-		return printMessage(_name + " took " + std::to_string(amount) + " demage and he/she is dead!", "ClapTrap ");
+		return printMessage("ClapTrap ", _name + " took " + std::to_string(amount) + " demage and he/she is dead!");
 	}
 	else
 		setHealth(getHealth() - amount);
-	
-	printMessage(_name + " has taken " + std::to_string(amount) + " damage on his health", "ClapTrap ");
+
+	printMessage("ClapTrap ", " has taken " + std::to_string(amount) + " damage on his health");
 };
 
 void	ClapTrap::beRepaired(unsigned int amount) {
-	
+
 	if (!getEnergy())
-		return printfErrorMsg(_name + "'s Energy is 0", this->_name);
+		return printMessage(this->_name, _name + "'s Energy is 0");
 	else if (!getHealth())
-		return printfErrorMsg(_name + "'s Health is 0 you're already dead!", this->_name);
+		return printfErrorMsg(this->_name, _name + "'s Health is 0 you're already dead!");
 	
 	setHealth(getHealth() + amount);
 	setEnergy(getEnergy() - 1);
-	printMessage(_name + " took " + std::to_string(amount) + " amount of energy.", "ClapTrap ");
+	printMessage("ClapTrap ", _name + " took " + std::to_string(amount) + " amount of energy.");
 	
 };
-
-
 
 // --~~--~~--~~--~~--~~ Set - Get ~~--~~--~~--~~--~~--//
 
@@ -118,19 +113,15 @@ void ClapTrap::setDamage(int damage) {
 
 // --~~--~~--~~--~~--~~ Print Messages ~~--~~--~~--~~--~~--//
 
-void	ClapTrap::printfErrorMsg(const std::string &name, const std::string &target) const {
-	std::cout << target << name << std::endl;
+void	ClapTrap::printfErrorMsg(const std::string &subject, const std::string &name) const {
+	std::cout << subject << name << std::endl;
 	printInfo();
 };
 
-void	ClapTrap::printMessage(const std::string &msg, const std::string &target) const {
-	std::cout << target << msg << std::endl;
+void	ClapTrap::printMessage(const std::string &subject, const std::string &msg) const {
+	std::cout << subject << msg << std::endl;
 	printInfo();
-}
-
-
-// --~~--~~--~~--~~--~~ Print Info ~~--~~--~~--~~--~~--//
-
+};
 
 void	ClapTrap::printInfo() const {
 	std::cout << std::endl;
