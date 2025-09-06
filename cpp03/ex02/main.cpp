@@ -35,7 +35,8 @@ int main() {
     scav2.gateKeeper();
 
 	FragTrap frag("One");
-    frag.takeDamage(40);
+    frag.takeDamage(42);
+    frag.beRepaired(52);
 
     FragTrap frag007(frag);
 

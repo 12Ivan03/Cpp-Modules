@@ -10,49 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FragTrap.hpp"
+#include "ScavTrap.hpp"
 
-FragTrap::FragTrap() : ClapTrap() {
+ScavTrap::ScavTrap() : ClapTrap() {
 	_health = 100;
-	_energy = 100;
-	_damage = 30;
-	std::cout << "Constructor -> FragTrap" << std::endl;
+	_energy = 50;
+	_damage = 20;
+	std::cout << "Default initializer. -> ScavTrap" << std::endl;
 };
 
-FragTrap::FragTrap(const FragTrap &other) : ClapTrap(other) {
-	std::cout << "Copy Destructor -> FragTrap" << std::endl;
+ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other) {
+	std::cout << "Copy constructor -> ScavTrap" << std::endl;
 };
 
+ScavTrap& ScavTrap::operator=(const ScavTrap &other) {
 
-FragTrap& FragTrap::operator=(const FragTrap &other) {
-	
 	if (this != &other) {
 		ClapTrap::operator=(other);
-		std::cout << "Assignment operator -> FragTrap" << std::endl;
+		std::cout << "Assignment operator -> ScavTrap" << std::endl;
 	}
 	return *this;
 };
 
-FragTrap::~FragTrap() {
-	std::cout << "Destructor -> FragTrap" << std::endl;
+ScavTrap::~ScavTrap() {
+	std::cout << "Destructor -> ScavTrap" << std::endl;
 };
 
-FragTrap::FragTrap(const std::string name) : ClapTrap(name) {
+ScavTrap::ScavTrap(const std::string name) : ClapTrap(name) {
 	_health = 100;
-	_energy = 100;
-	_damage = 30;
-	std::cout << "Name constructor -> FragTrap" << std::endl;
+	_energy = 50;
+	_damage = 20;
+	std::cout << "Name constructor -> ScavTrap" << std::endl;
 };
 
-void	FragTrap::highFivesGuys(void) const {
-	std::cout << "Displays positive high-fives request on the standard output." << std::endl;
-};
-
-void	FragTrap::attack(const std::string &target) {
+void	ScavTrap::attack(const std::string &target) {
 
 	if (!getEnergy())
-		return printfErrorMsg("FragTrap ", _name + "'s energy is 0");
+		return printfErrorMsg(_name + "'s energy is 0", "ScavTrap ");
 	setEnergy(getEnergy() - 1);
 	
-	printMessage("FragTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");
+	printMessage("ScavTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");
+};
+
+void	ScavTrap::gateKeeper() {
+	std::cout << "ScavTrap is now in a Gate keeper mode" << std::endl;
 };

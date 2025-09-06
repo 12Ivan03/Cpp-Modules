@@ -10,23 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRAGTRAP_HPP
-#define FRAGTRAP_HPP
+#ifndef CLAPTRAP_HPP
+#define CLAPTRAP_HPP
 
-#include "ClapTrap.hpp"
+#include <iostream>
 
-class FragTrap : public ClapTrap {
+class ClapTrap {
+
+	protected:
+		std::string _name;
+		int _health {10};
+		int _energy {10};
+		int _damage {0};
+
+		void		setName(std::string name);
+		void		setHealth(int health);
+		void		setEnergy(int energy);
+		void		setDamage(int damage);
+		std::string	getName() const;
+		int			getHealth() const;
+		int			getEnergy() const;
+		int			getDamage() const;
 
 	public:
-		FragTrap();
-		FragTrap(const FragTrap &other);
-		FragTrap &operator=(const FragTrap &other);
-		~FragTrap();
-
-		FragTrap(const std::string name);
+		ClapTrap();
+		ClapTrap(const ClapTrap &other);
+		ClapTrap &operator=(const ClapTrap &other);
+		~ClapTrap();
+		ClapTrap(const std::string name);
 
 		void	attack(const std::string &target);
-		void	highFivesGuys(void) const;
+		void	takeDamage(unsigned int amount);
+		void	beRepaired(unsigned int amount);
+
+		void	printInfo() const;
+		void	printfErrorMsg(const std::string &subject, const std::string &name) const;
+		void	printMessage(const std::string &subject, const std::string &msg) const;
+	
 };
 
 #endif

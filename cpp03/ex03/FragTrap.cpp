@@ -49,10 +49,9 @@ void	FragTrap::highFivesGuys(void) const {
 };
 
 void	FragTrap::attack(const std::string &target) {
-
 	if (!getEnergy())
-		return printfErrorMsg("FragTrap ", _name + "'s energy is 0");
+		return printfErrorMsg(_name + "'s energy is 0", "FragTrap ");
 	setEnergy(getEnergy() - 1);
 	
 	printMessage("FragTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");
-};
+}

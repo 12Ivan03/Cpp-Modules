@@ -50,4 +50,3 @@ class ClapTrap {
 };
 
 #endif
-// static const int	_default_damage {0};

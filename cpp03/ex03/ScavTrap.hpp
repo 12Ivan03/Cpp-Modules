@@ -10,23 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRAGTRAP_HPP
-#define FRAGTRAP_HPP
+#ifndef SCAVTRAP_HPP
+#define SCAVTRAP_HPP
 
 #include "ClapTrap.hpp"
 
-class FragTrap : public ClapTrap {
+class ScavTrap : virtual public ClapTrap {
 
 	public:
-		FragTrap();
-		FragTrap(const FragTrap &other);
-		FragTrap &operator=(const FragTrap &other);
-		~FragTrap();
+		ScavTrap();
+		ScavTrap(const ScavTrap &other);
+		ScavTrap &operator=(const ScavTrap &other);
+		~ScavTrap();
 
-		FragTrap(const std::string name);
+		ScavTrap(const std::string name);
 
 		void	attack(const std::string &target);
-		void	highFivesGuys(void) const;
+		void	gateKeeper();
+
 };
 
 #endif
