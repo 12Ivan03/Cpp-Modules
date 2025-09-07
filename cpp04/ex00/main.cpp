@@ -24,5 +24,8 @@ int main() {
 
 	std::cout << k->getType() << std::endl;
 	k->makeSound();
+
+	delete k;
+
 	return 0;
 }
