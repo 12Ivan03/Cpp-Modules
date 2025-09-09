@@ -18,6 +18,9 @@ class Dog : public Animal {
 
 		virtual void makeSound() const;
 
+		int	createIdea(int index, const std::string &idea);
+		std::string &pullIdea(int index) const;
+
 };
 
 #endif

@@ -28,10 +28,10 @@ Brain::~Brain() {
 	std::cout << "B-dtor" << std::endl;
 };
 
-// void Brain::setIdea(int index, std::string idea) {
-// 	ideas[index] = idea;
-// };
+void Brain::setIdea(int index, const std::string &idea) {
+	ideas[index] = idea;
+};
 
-// std::string Brain::getIdea(int index) {
-// 	return ideas[index];
-// };
+std::string& Brain::getIdea(int index) {
+	return ideas[index];
+};

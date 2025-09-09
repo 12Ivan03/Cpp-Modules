@@ -15,10 +15,13 @@ int main() {
 	j->makeSound();
 	meta->makeSound();
 
+	std::cout << std::endl;
 	
 	delete i;
 	delete j;
 	delete meta;
+
+	std::cout << std::endl;
 	
 	const Animal* k = new Dog();
 
