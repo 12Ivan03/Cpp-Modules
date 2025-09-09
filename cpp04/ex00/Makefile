@@ -2,7 +2,7 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g
 
-SRC_FILES = main.cpp Animal.cpp Cat.cpp Dog.cpp
+SRC_FILES = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 NAME = polynmorphism
