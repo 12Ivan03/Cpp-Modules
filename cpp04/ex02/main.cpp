@@ -8,12 +8,12 @@ int main() {
 	const Animal* j = new Dog();
 	const Animal* i = new Cat();
 	// const Animal* m = new Animal();
+	// m->makeSound();
+	// delete m;
 	j->makeSound();
 	i->makeSound();
-	// m->makeSound();
 	delete j;
 	delete i;
-	// delete m;
 	std::cout << std::endl << "~~~~~ Create ZOO ~~~~~" << std::endl;
 	
 	const int N = 10;
