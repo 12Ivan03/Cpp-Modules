@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 11:35:06 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,18 @@ int main() {
     scav.attack("Koko");
     scav.gateKeeper();
 
-    std::cout << "\n=== Copy and Assignment Test ===" << std::endl;
+    std::cout << "\n=== Copy Test ===" << std::endl;
     ScavTrap scav2(scav);
     scav2.attack("target3");
     scav2.takeDamage(12);
     scav2.beRepaired(15);
 
+    std::cout << "\n=== Assignment Test ===" << std::endl;
     ScavTrap scav3("Another");
     scav3 = scav2;
     scav2.gateKeeper();
 
+    std::cout << "\n=== Create FragTrap ===" << std::endl;
 	FragTrap frag("One");
     frag.takeDamage(42);
     frag.beRepaired(52);
