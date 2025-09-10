@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:57:04 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 11:57:05 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 11:11:55 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ ScavTrap::ScavTrap() : ClapTrap() {
 	_health = 100;
 	_energy = 50;
 	_damage = 20;
-	std::cout << " ScavTrap default constructor" << std::endl;
+	std::cout << "ScavTrap default constructor" << std::endl;
 };
 
 ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other) {

@@ -2,10 +2,10 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g
 
-SRC_FILES = main.cpp ClapTrap.cpp
+SRC_FILES = main.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = aaaaand.open
+NAME = interface
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 11:21:25 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,23 @@
 
 // --~~--~~--~~--~~--~~ OCcF ~~--~~--~~--~~--~~--//
 
-ClapTrap::ClapTrap() {};
+ClapTrap::ClapTrap() {
+	std::cout << "ClpaTrap ctor" << std::endl;
+};
 
 ClapTrap::ClapTrap(const ClapTrap &other) : 
 	_name(other._name),
 	_health(other._health),
 	_damage(other._damage),
-	_energy(other._energy) {};
+	_energy(other._energy) {
+	
+	std::cout << "ClpaTrap copy ctor" << std::endl;
+
+};
 
 ClapTrap& ClapTrap::operator=(const ClapTrap &other) {
 	
+	std::cout << "ClpaTrap copy operator ctor" << std::endl;
 	if (this != &other) {
 		this->_name = other._name;
 		this->_health = other._health;
@@ -34,9 +41,13 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &other) {
 	return *this;
 };
 
-ClapTrap::~ClapTrap() {};
+ClapTrap::~ClapTrap() {
+	std::cout << "ClpaTrap dtor" << std::endl;
+};
 
-ClapTrap::ClapTrap(std::string name) : _name(name) {};
+ClapTrap::ClapTrap(std::string name) : _name(name) {
+	std::cout << "ClpaTrap ctor name" << std::endl;
+};
 
 
 // --~~--~~--~~--~~--~~ Action ~~--~~--~~--~~--~~--//

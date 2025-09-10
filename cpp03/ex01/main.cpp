@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:57:02 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 13:49:11 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 11:23:38 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int main() {
     //     ClapTrap clap("Chris");
     //     ScavTrap scav("Chris");
 
-    //     clap.attack("target3"); // -> ClapTrap Chris attacks target3, causing 20 points of damage!
-    //     scav.attack("target3"); // -> ScavTrap Chris attacks target3, causing 20 points of damage!
+    //     clap.attack("target3");
+    //     scav.attack("target3");
 
     //     ClapTrap* poly = new ScavTrap("Chris");
-    //     poly->attack("target3"); // with virtual: ScavTrap ... (dynamic)
+    //     poly->attack("target3");
     //     delete poly;
     // }
 	
