@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:57:04 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/09/10 11:11:55 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 15:52:38 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 
 ScavTrap::ScavTrap() : ClapTrap() {
+	
 	_health = 100;
 	_energy = 50;
 	_damage = 20;
@@ -38,16 +39,19 @@ ScavTrap::~ScavTrap() {
 };
 
 ScavTrap::ScavTrap(const std::string name) : ClapTrap(name) {
+	
 	_health = 100;
 	_energy = 50;
 	_damage = 20;
 	std::cout << "Name passed as argument called form ScavTrap" << std::endl;
-
 };
 
 void	ScavTrap::attack(const std::string &target) {
+
+	if (!getHealth())
+		return printfErrorMsg(_name + "'s Health is 0. Canot attack", "ScavTrap ");
 	if (!getEnergy())
-		return printfErrorMsg(_name + "'s energy is 0", "ScavTrap ");
+		return printfErrorMsg(_name + "'s energy is 0. Canot attack", "ScavTrap ");
 	setEnergy(getEnergy() - 1);
 	
 	printMessage(_name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!", "ScavTrap ");

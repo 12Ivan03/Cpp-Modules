@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/09/10 11:42:46 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:08:27 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ ScavTrap::ScavTrap(const std::string name) : ClapTrap(name) {
 
 void	ScavTrap::attack(const std::string &target) {
 
+	if (!getHealth())
+		return printfErrorMsg( "ScavTrap ", _name + "'s Health is 0. Canot attack");
 	if (!getEnergy())
-		return printfErrorMsg(_name + "'s energy is 0", "ScavTrap ");
+		return printfErrorMsg( "ScavTrap ", _name + "'s Energy is 0. Cannot attack");
 	setEnergy(getEnergy() - 1);
 	
 	printMessage("ScavTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");

@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:23:11 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ ClapTrap::ClapTrap(const std::string name) : _name(name) {
 // --~~--~~--~~--~~--~~ Action ~~--~~--~~--~~--~~--//
 
 void	ClapTrap::attack(const std::string &target) {
+
+	if (!getHealth())
+		return printfErrorMsg("ClapTrap ", _name + "'s Health is 0. Canot attack");
 	if (!getEnergy())
-		return printfErrorMsg(_name + "'s energy is 0", this->_name);
+		return printfErrorMsg("ClapTrap ", _name + "'s energy is 0. Canot attack");
 	setEnergy(getEnergy() - 1);
 	
 	printMessage( "ClapTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");
@@ -59,6 +62,7 @@ void	ClapTrap::attack(const std::string &target) {
 };
 
 void	ClapTrap::takeDamage(unsigned int amount) {
+	
 	if (getHealth() == 0)
 		return printMessage("ClapTrap ", _name + " is already dead!");
 	
@@ -75,9 +79,9 @@ void	ClapTrap::takeDamage(unsigned int amount) {
 void	ClapTrap::beRepaired(unsigned int amount) {
 
 	if (!getEnergy())
-		return printMessage(this->_name, _name + "'s Energy is 0");
+		return printMessage("ClapTrap ", _name + "'s Energy is 0. Cannot repair");
 	else if (!getHealth())
-		return printfErrorMsg(this->_name, _name + "'s Health is 0 you're already dead!");
+		return printfErrorMsg("ClapTrap ", _name + "'s Health is 0 you're already dead!");
 	
 	setHealth(getHealth() + amount);
 	setEnergy(getEnergy() - 1);

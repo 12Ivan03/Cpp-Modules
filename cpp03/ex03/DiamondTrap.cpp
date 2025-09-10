@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*   DiamondTrap.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:19:27 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 
 DiamondTrap::DiamondTrap() : ClapTrap(), ScavTrap(), FragTrap() {
-	_health = 100;
-	_energy = 50;
-	_damage = 30;
+	_health = FragTrap::defaultHealth;
+	_energy = ScavTrap::defaultEnergy;
+	_damage = FragTrap::defaultDamage;
 	std::cout << "DiamondTrap default constructor" << std::endl;
 };
 
@@ -38,9 +38,9 @@ DiamondTrap& DiamondTrap::operator=(const DiamondTrap &other) {
 
 DiamondTrap::DiamondTrap(const std::string name) : ClapTrap(name + "_clap_name"), ScavTrap(name + "_scav_name"), FragTrap(name + "_frag_name"), _name(name)
 {
-	_health = 100;
-	_energy = 50;
-	_damage = 30;
+	_health = FragTrap::defaultHealth;
+	_energy = ScavTrap::defaultEnergy;
+	_damage = FragTrap::defaultDamage;
 	std::cout << "DiamondTrap name constructor" << std::endl;
 };
 

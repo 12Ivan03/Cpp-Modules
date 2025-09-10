@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:57:00 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 13:57:35 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 13:04:31 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ class ClapTrap {
 		void	beRepaired(unsigned int amount);
 
 		void	printInfo() const;
-		void	printfErrorMsg(const std::string &name, const std::string &target) const;
+		void	printfErrorMsg(const std::string &name, const std::string &clapTrapType) const;
 		void	printMessage(const std::string &msg, const std::string &target) const;
 };
 

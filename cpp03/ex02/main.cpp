@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:06 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:11:37 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int main() {
 	std::cout << "=== Creating ClapTrap ===" << std::endl;
     ClapTrap clap("Koko");
     clap.attack("other dogs");
+    clap.beRepaired(1);
 
     std::cout << "\n=== Creating ScavTrap ===" << std::endl;
     ScavTrap scav("Chris");
@@ -29,11 +30,14 @@ int main() {
     scav2.attack("target3");
     scav2.takeDamage(12);
     scav2.beRepaired(15);
+    for (int i = 0; i < 50; i++)
+        scav2.attack("target3");
 
     std::cout << "\n=== Assignment Test ===" << std::endl;
     ScavTrap scav3("Another");
     scav3 = scav2;
-    scav2.gateKeeper();
+    scav3.gateKeeper();
+    scav3.attack("someone");
 
     std::cout << "\n=== Create FragTrap ===" << std::endl;
 	FragTrap frag("One");
@@ -42,13 +46,16 @@ int main() {
 
     FragTrap frag007(frag);
 
-    frag007.attack("frag");
-    frag007.attack("frag123");
-    frag007.attack("frag321");
-    frag007.attack("frag231");
-    frag007.attack("frag132");
+    frag007.attack("Frager");
+    frag007.attack("Frager123");
+    frag007.attack("Frager321");
+    frag007.attack("Frager231");
+    frag007.attack("Frager132");
+    // for (int i = 0; i < 100; i++)
+    //     frag007.attack("Frager3");
+    // frag007.attack("someone");
+    frag007.takeDamage(1);
     
-
     std::cout << "\n=== Destructors Called ===" << std::endl;
 
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:23:35 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/28 18:32:58 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 15:38:02 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,23 @@
 
 // --~~--~~--~~--~~--~~ OCcF ~~--~~--~~--~~--~~--//
 
-ClapTrap::ClapTrap() {};
+//Add constructor/destructor messages
+ClapTrap::ClapTrap() {
+	std::cout << "ClapTrap ctor" << std::endl;
+};
 
 ClapTrap::ClapTrap(const ClapTrap &other) : 
 	_name(other._name),
 	_health(other._health),
 	_damage(other._damage),
-	_energy(other._energy) {};
+	_energy(other._energy) {
+
+	std::cout << "ClapTrap copy ctor" << std::endl;
+};
 
 ClapTrap& ClapTrap::operator=(const ClapTrap &other) {
 	
+	std::cout << "ClapTrap Assingment ctor" << std::endl;
 	if (this != &other) {
 		this->_name = other._name;
 		this->_health = other._health;
@@ -33,17 +40,23 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &other) {
 	return *this;
 };
 
-ClapTrap::~ClapTrap() {};
+ClapTrap::~ClapTrap() {
+	std::cout << "ClapTrap dtor" << std::endl;
+};
 
-ClapTrap::ClapTrap(std::string name) : _name(name) {};
+ClapTrap::ClapTrap(std::string name) : _name(name) {
+	std::cout << "ClapTrap ctor name" << std::endl;
+};
 
 
 // --~~--~~--~~--~~--~~ Action ~~--~~--~~--~~--~~--//
 
 void	ClapTrap::attack(const std::string &target) {
-
+	
+	if (!getHealth())
+		return printfErrorMsg(_name + "'s Health is 0. Canot attack");
 	if (!getEnergy())
-		return printfErrorMsg(_name + "'s energy is 0");
+		return printfErrorMsg(_name + "'s energy is 0. Cannot attack");
 	setEnergy(getEnergy() - 1);
 	
 	printMessage(_name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");
@@ -68,13 +81,13 @@ void	ClapTrap::takeDamage(unsigned int amount) {
 void	ClapTrap::beRepaired(unsigned int amount) {
 	
 	if (!getEnergy())
-		return printfErrorMsg(_name + "'s Energy is 0");
+		return printfErrorMsg(_name + "'s Energy is 0. Canot repair");
 	else if (!getHealth())
 		return printfErrorMsg(_name + "'s Health is 0 you're already dead!");
 	
 	setHealth(getHealth() + amount);
 	setEnergy(getEnergy() - 1);
-	printMessage(_name + " took " + std::to_string(amount) + " amount of energy.");
+	printMessage(_name + " regained " + std::to_string(amount) + " amount of energy.");
 	
 };
 

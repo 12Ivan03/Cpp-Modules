@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*   FragTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:15:13 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ void	FragTrap::highFivesGuys(void) const {
 };
 
 void	FragTrap::attack(const std::string &target) {
+
+	if (!getHealth())
+		return printfErrorMsg("FragTrap ", _name + "'s Health is 0. Canot attack");
 	if (!getEnergy())
-		return printfErrorMsg(_name + "'s energy is 0", "FragTrap ");
+		return printfErrorMsg("FragTrap ", _name + "'s energy is 0. Canot attack");
 	setEnergy(getEnergy() - 1);
 	
 	printMessage("FragTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");

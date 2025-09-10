@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/08/29 11:56:59 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 13:32:17 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ class ScavTrap : virtual public ClapTrap {
 
 		void	attack(const std::string &target);
 		void	gateKeeper();
+
+		static const int defaultHealth {100};
+		static const int defaultEnergy {50};
+		static const int defaultDamage {20};
 
 };
 

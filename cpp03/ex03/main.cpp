@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/09/10 11:55:26 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:24:56 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main() {
         DiamondTrap d1("DiaOne");             
         d1.whoAmI();                          
         d1.highFivesGuys();                   
-        d1.attack("dummy");                   
+        d1.attack("dummy");           
 	}
 
     // banner("02) Stat mix check (HP=100 from Frag, EP=50 from Scav, AD=30 from Frag)");

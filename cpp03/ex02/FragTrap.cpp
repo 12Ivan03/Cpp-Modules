@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/09/10 11:43:47 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:03:33 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ void	FragTrap::highFivesGuys(void) const {
 };
 
 void	FragTrap::attack(const std::string &target) {
-
+	
+	if (!getHealth())
+		return printfErrorMsg(_name + "'s health is 0. Cannot attack", this->_name);
 	if (!getEnergy())
-		return printfErrorMsg("FragTrap ", _name + "'s energy is 0");
+		return printfErrorMsg("FragTrap ", _name + "'s Energy is 0. Cannot attack");
 	setEnergy(getEnergy() - 1);
 	
 	printMessage("FragTrap ", _name + " attacks " + target + ", causing " + std::to_string(_damage) + " points of damage!");
