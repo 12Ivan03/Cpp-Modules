@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/09/10 16:11:37 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:49:28 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int main() {
 	std::cout << "=== Creating ClapTrap ===" << std::endl;
     ClapTrap clap("Koko");
     clap.attack("other dogs");
+    for (int i = 0; i < 12; i++)
+        clap.attack("target3");
     clap.beRepaired(1);
 
     std::cout << "\n=== Creating ScavTrap ===" << std::endl;

@@ -6,7 +6,7 @@
 /*   By: ipavlov <ipavlov@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 11:56:58 by ipavlov           #+#    #+#             */
-/*   Updated: 2025/09/10 16:05:14 by ipavlov          ###   ########.fr       */
+/*   Updated: 2025/09/10 16:50:11 by ipavlov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	ClapTrap::takeDamage(unsigned int amount) {
 void	ClapTrap::beRepaired(unsigned int amount) {
 
 	if (!getEnergy())
-		return printMessage(this->_name, _name + "'s Energy is 0. Cannot repair");
+		return printMessage("ClapTrap " , _name + "'s Energy is 0. Cannot repair");
 	else if (!getHealth())
-		return printfErrorMsg(this->_name, _name + "'s Health is 0 you're already dead!");
+		return printfErrorMsg("ClapTrap " , _name + "'s Health is 0 you're already dead!");
 	
 	setHealth(getHealth() + amount);
 	setEnergy(getEnergy() - 1);
