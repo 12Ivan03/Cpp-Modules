@@ -1,4 +1,3 @@
-
 #include "Bureaucrat.hpp"
 
 // orthodox canonical form public:
