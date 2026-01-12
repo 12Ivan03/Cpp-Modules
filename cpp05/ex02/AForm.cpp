@@ -2,6 +2,15 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
+// private: 
+
+void	AForm::setGrade(int sign, int exec) {
+	if (_gradeToSignIt < 1 || _gradeToExecuteIt < 1)
+		throw GradeTooHighException();
+	if (_gradeToSignIt > 150 || _gradeToExecuteIt > 150)
+		throw GradeTooLowException();
+};
+
 // OCF:
 AForm::AForm(const std::string &name, int gradeToSign, int gradeToExecute) : 
 		_name(name), 
@@ -9,10 +18,7 @@ AForm::AForm(const std::string &name, int gradeToSign, int gradeToExecute) :
 		_gradeToSignIt(gradeToSign),
 		_gradeToExecuteIt(gradeToExecute) 
 {
-	if (_gradeToSignIt < 1 || _gradeToExecuteIt < 1)
-		throw GradeTooHighException();
-	if (_gradeToSignIt > 150 || _gradeToExecuteIt > 150)
-		throw GradeTooLowException();
+	setGrade(_gradeToSignIt, _gradeToExecuteIt);
 };
 
 AForm::AForm(const AForm &other)  : 

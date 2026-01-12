@@ -16,6 +16,7 @@ class AForm {
 		bool				_isSigned;   
 		const int			_gradeToSignIt;
 		const int			_gradeToExecuteIt;
+		void				setGrade(int sign, int exec);
 
 	public:
 
