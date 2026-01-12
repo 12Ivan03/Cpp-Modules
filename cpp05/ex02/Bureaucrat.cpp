@@ -1,4 +1,6 @@
+
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 // protected:
 void				Bureaucrat::setGrade(int grade) {
@@ -9,10 +11,11 @@ void				Bureaucrat::setGrade(int grade) {
 		throw GradeTooLowException();
 
 	_grade = grade;
+
 };
 
 // public:
-// orthodox canonical form public:
+// Orthodox Canonical Form:
 Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name), _grade(grade) {
 	
 	if (_grade < 1)
@@ -37,11 +40,11 @@ Bureaucrat::~Bureaucrat() {};
 
 // inharitance from std::exception
 const char*			Bureaucrat::GradeTooHighException::what() const throw() {
-	return "Grade too high";
+	return "Exception Bureaucrat throw: Grade too High";
 };
 
 const char*			Bureaucrat::GradeTooLowException::what() const throw() {
-	return "Grade too low";
+	return "Exception Bureaucrat throw: Grade too Low";
 };
 
 const std::string&	Bureaucrat::getName() const {
@@ -60,7 +63,18 @@ void				Bureaucrat::decrementGrade() {
 	setGrade(_grade + 1);
 };
 
-// overload outout operator from std::
+void				Bureaucrat::signForm(Form &f) {
+
+	try {
+		f.beSigned(*this);
+		std::cout << getName() << " signed " << f.getName() << std::endl;
+	} catch (std::exception &c) {
+		std::cout << "\33[31m" << getName() << " couldn’t sign " << f.getName() 
+				<< " becuase " << c.what() << "\33[0m" << std::endl;
+	}
+};
+
+// overload out operator from std::
 std::ostream& operator<<(std::ostream& oS, const Bureaucrat &b) {
 	return oS << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
 }
