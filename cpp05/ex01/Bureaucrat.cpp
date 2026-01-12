@@ -1,6 +1,21 @@
-#include "Bureaucrat.hpp"
 
-// orthodox canonical form public:
+#include "Bureaucrat.hpp"
+#include "Form.hpp"
+
+// protected:
+void				Bureaucrat::setGrade(int grade) {
+
+	if (grade < 1)
+		throw GradeTooHighException();
+	if (grade > 150)
+		throw GradeTooLowException();
+
+	_grade = grade;
+
+};
+
+// public:
+// Orthodox Canonical Form:
 Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name), _grade(grade) {
 	
 	if (_grade < 1)
@@ -23,27 +38,13 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat &other) {
 
 Bureaucrat::~Bureaucrat() {};
 
-// protected:
-void				Bureaucrat::setGrade(int grade) {
-
-	if (grade < 1)
-		throw GradeTooHighException();
-	if (grade > 150)
-		throw GradeTooLowException();
-
-	_grade = grade;
-
-};
-
-// public:
-
 // inharitance from std::exception
 const char*			Bureaucrat::GradeTooHighException::what() const throw() {
-	return "Gread too high";
+	return "Exception Bureaucrat throw: Grade too High";
 };
 
 const char*			Bureaucrat::GradeTooLowException::what() const throw() {
-	return "Gread too low";
+	return "Exception Bureaucrat throw: Grade too Low";
 };
 
 const std::string&	Bureaucrat::getName() const {
@@ -62,11 +63,18 @@ void				Bureaucrat::decrementGrade() {
 	setGrade(_grade + 1);
 };
 
-void				Bureaucrat::signForm() {
-	
+void				Bureaucrat::signForm(Form &f) {
+
+	try {
+		f.beSigned(*this);
+		std::cout << getName() << " signed " << f.getName() << std::endl;
+	} catch (std::exception &c) {
+		std::cout << "\33[31m" << getName() << " couldn’t sign " << f.getName() 
+				<< " becuase " << c.what() << "\33[0m" << std::endl;
+	}
 };
 
-// overload outout operator from std::
+// overload out operator from std::
 std::ostream& operator<<(std::ostream& oS, const Bureaucrat &b) {
 	return oS << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
 }

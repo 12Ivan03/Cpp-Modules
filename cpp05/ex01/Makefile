@@ -2,10 +2,10 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g
 
-SRC_FILES = main.cpp Bureaucrat.cpp
+SRC_FILES = main.cpp Bureaucrat.cpp Form.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = Bureaucracy.out
+NAME = BureaucracyForm.out
 
 all: $(NAME)
 

@@ -5,6 +5,8 @@
 #include <string>
 #include <exception>
 
+class Form;
+
 class Bureaucrat {
 
 	protected:
@@ -33,7 +35,7 @@ class Bureaucrat {
 		int					getGrade() const;
 		void				incrementGrade();
 		void				decrementGrade();
-		void				signForm();
+		void				signForm(Form &f);
 };
 
 std::ostream& operator<<(std::ostream &oS, const Bureaucrat &b);

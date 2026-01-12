@@ -7,8 +7,8 @@
 #include <string>
 
 class Bureaucrat;
-// protected: -> can be access from inharitance
-// private: -> can NOT be access from inharitance. Only this class.
+// protected: -> Can be access from inharitance
+// private: -> Can NOT be access from inharitance. Only this class.
 class Form {
 
 	private:
