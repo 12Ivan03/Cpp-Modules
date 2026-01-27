@@ -10,7 +10,7 @@ void	put_devider(int test_number);
 
 int	main(void) {
 
-	std::srand(std::time(0));
+	std::srand(time(0));
 
 	try {
 		// ~~~~~~~~~~~~~~~~~~~   Test 1    ~~~~~~~~~~~~~~~~~~~
