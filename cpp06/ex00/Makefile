@@ -6,7 +6,7 @@ SRC_FILES = main.cpp \
 ScalarConverter.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = 28C_Not_28B.out
+NAME = convert
 
 all: $(NAME)
 
