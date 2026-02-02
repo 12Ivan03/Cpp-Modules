@@ -3,12 +3,7 @@ CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g3
 
 SRC_FILES = main.cpp \
-Bureaucrat.cpp \
-AForm.cpp \
-ShrubberyCreationForm.cpp \
-RobotomyRequestForm.cpp \
-PresidentialPardonForm.cpp \
-Intern.cpp
+ScalarConverter.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 NAME = 28C_Not_28B.out
