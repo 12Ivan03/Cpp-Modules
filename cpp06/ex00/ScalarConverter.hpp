@@ -4,7 +4,9 @@
 
 #include <iostream>
 #include <string>
-
+#include <algorithm>
+#include <iomanip>
+#include <limits.h>
 
 // it must not be instantiable by users
 

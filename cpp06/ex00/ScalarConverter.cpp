@@ -1,7 +1,5 @@
 
 #include "ScalarConverter.hpp"
-#include <algorithm>
-#include <iomanip>
 
 // OCF:
 ScalarConverter::ScalarConverter() {};
@@ -28,6 +26,35 @@ std::string	myTrimString(const std::string &str) {
 
 	return str.substr(start, end - start + 1);
 }
+
+static bool	myStrToDF(const std::string &s, int sLen) {
+
+	int dot = 0;
+	int noAllDigit = 0;
+
+	for (int i = sLen - 1; i >= 0; i--) {
+		if (i == 0 && (s[i] == '-' || s[i] == '+')) 
+			continue ;
+		if (s[i] == '.')
+		{
+			if (i == 0 || i == sLen - 1)
+				return (false);
+			if (!isdigit(s[i - 1]) || !isdigit(s[i + 1]))
+				return (false);
+			dot++;
+		} else if (!isdigit(s[i]))
+			return (false);
+		if (!isdigit(s[i]))
+			noAllDigit++;
+	}
+
+	if (noAllDigit == 0)
+		return (true);
+	else if (dot == 1)
+		return(true);
+
+	return (false);
+};
 
 // printing functions
 
@@ -59,12 +86,18 @@ static void	printInt(double value) {
 	} else if (value >= INT32_MIN && value <= INT32_MAX) {
 		std::cout << static_cast<int>(value) << std::endl;
 	} 
-	else {
-		std::cout << "impossible else" << std::endl;
-	} 
+	// else {
+	// 	std::cout << "impossible" << std::endl;
+	// } 
+
+	// if (value < std::numeric_limits<int>::min() ||
+    // value > std::numeric_limits<int>::max())
 };
 
 static void	printFloat(double value) {
+
+	std::ios oldState(nullptr);
+	oldState.copyfmt(std::cout);
 
 	std::cout << "float: ";
 	float output = static_cast<float>(value);
@@ -72,13 +105,19 @@ static void	printFloat(double value) {
 	if  (std::isnan(value)) {
 		std::cout << "nanf" << std::endl;
 	} else if (std::isinf(value) || std::isinf(output)) {
+		// std::signbit(output) instead of output > 0
 		std::cout << (output > 0 ? "+inff" : "-inff") << std::endl;
 	} else {
 		std::cout << std::fixed << std::setprecision(1) << output << "f" <<std::endl;
 	}
+
+	std::cout.copyfmt(oldState);
 };
 
 static void	printDouble(double value) {
+
+	std::ios oldState(nullptr);
+	oldState.copyfmt(std::cout);
 
 	std::cout << "double: ";
 
@@ -88,8 +127,11 @@ static void	printDouble(double value) {
 		std::cout << (value > 0 ? "+inf" : "-inf") << std::endl;
 	} else {
 		// std::cout << std::fixed << std::setprecision(1) <<  value << std::endl;
-		std::cout << value << std::endl;
+		std::cout << std::fixed << std::setprecision(1) << value <<std::endl;
 	}
+
+	std::cout.copyfmt(oldState);
+
 };
 
 static void	printAll(double value) {
@@ -168,30 +210,25 @@ static void	printStringLength(const std::string &s)
 
 static int	evalEndsOnF(const std::string &s) {
 
+	// std::cout << "evalEndsOnF" << std::endl;
+
 	int sLen = s.length() - 1;
-	int dot = 0;
+	// int dot = 0;
 	char *end = nullptr;
 	double value = strtod(s.c_str(), &end);
 
 	if (end == s.c_str())
 		return (-1);
-	
-	for (int i = sLen - 1; i >= 0; i--) {
-		if (i == 0 && ((s)[i] == '-' || (s)[i] == '+')) {
-			continue ;
-		}
-		if ((s)[i] == '.' && i != 0)
-		{
-			if (!isdigit((s)[i - 1]) || !isdigit((s)[i + 1])) 
-				return (-1);
-			dot++;
-		} else if (!isdigit((s)[i]))
-			return (-1);
+	if (end[0] != 'f' || end[1] != '\0') {
+		// std::cout << "end != f" << std::endl;
+		return (-1);
 	}
+	// std::cout << "end = " << end << std::endl;
+	// std::cout << "sLen F = " << sLen << std::endl;
 
-	if (dot == 1)
-		return(1);
-
+	if (myStrToDF(s, sLen))
+		return (1);
+	
 	return (-1);
 };
 
@@ -205,18 +242,34 @@ static void	printEndsOnF(const std::string &s) {
 
 static int	evalStrinIntDouble(const std::string &s) {
 
-	int sLen = s.length();
-	// std::cout << "double " << std::endl;
+	// std::cout << "evalStrinIntDouble" << std::endl;
 
+	int sLen = s.length();
 	char *end = nullptr;
 	double value = strtod(s.c_str(), &end);
-	// std::cout << "double value = strtod() ===> " << end[0] << std::endl;
+	int noAllDigit = 0;
 
+	// std::cout << "end[0] == 0 >" << end << "<"<<std::endl;
+	// std::cout << "sLen == 0 >" << sLen << "<"<<std::endl;
+
+	// for (int i = 0; i < sLen; i++) {
+	// 	// std::cout << "s[i] == >" << s[i] << "<"<<std::endl;
+
+	// 	if (!isdigit(s[i]))
+	// 		noAllDigit++;
+	// }
+	// if (noAllDigit == 0)
+	// 	return (1);
+	if (!myStrToDF(s, sLen))
+		return (-1);
 	if (end == s.c_str())
 		return (-1);
-	if (end[0] == '\0')
-		return (1);
-	return (-1);
+	if (end[0] != '\0') {
+		// std::cout << "end[0] == 0" << std::endl;
+		return (-1);
+	}
+
+	return (1);
 };
 
 static void	printStrinIntDouble(const std::string &s) {
@@ -253,7 +306,21 @@ void ScalarConverter::convert(const std::string &str) {
 // double (4.2)
 // otherwise invalid
 
+/* Questions for my pears:
 
+	1. 42f exceptable or not? 
+	2. 0.0f ->yes but 0.0F ?
+	3. ./convert -0
+
+	for me 
+	42. should NOT pass
+
+	If you only need big integers
+	boost::multiprecision::cpp_int
+
+	If you need big decimals accurately
+	boost::multiprecision::cpp_dec_float_50
+*/
 
 /*
 
