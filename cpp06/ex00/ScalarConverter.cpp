@@ -252,14 +252,14 @@ static void	printEndsOnF(const std::string &s) {
 
 static int	evalStrinIntDouble(const std::string &s) {
 
-	std::cout << "evalStrinIntDouble" << std::endl;
+	// std::cout << "evalStrinIntDouble" << std::endl;
 
 	int sLen = s.length();
 	char *end = nullptr;
 	double value = strtod(s.c_str(), &end);
 	int noAllDigit = 0;
 
-	std::cout << "end[0] == 0 >" << end << "<"<<std::endl;
+	// std::cout << "end[0] == 0 >" << end << "<"<<std::endl;
 	// std::cout << "sLen == 0 >" << sLen << "<"<<std::endl;
 
 	// for (int i = 0; i < sLen; i++) {
