@@ -31,7 +31,7 @@ static bool	isOnlyDigit(const std::string s) {
 
 	int sLen = s.length();
 	for (int i = 0; i < sLen; i++) {
-		std::cout << i << "s[i] == >" << s[i] << "<"<<std::endl;
+		// std::cout << i << "s[i] == >" << s[i] << "<"<<std::endl;
 
 		if (!isdigit(s[i]))
 			return (false);
@@ -41,12 +41,12 @@ static bool	isOnlyDigit(const std::string s) {
 
 static bool	myStrToDF(const std::string &s, int sLen) {
 
-	int dot = 0;
-		std::cout  << "sLen == >" << sLen << "<"<<std::endl;
+	// int dot = 0;
+		// std::cout  << "sLen == >" << sLen << "<"<<std::endl;
 
 	for (int i = sLen - 1; i >= 0; i--) {
-		std::cout << i << "s[i] == >" << s[i] << "<"<<std::endl;
-
+		
+		// std::cout << i << "s[i] == >" << s[i] << "<"<<std::endl;
 		if (i == 0 && (s[i] == '-' || s[i] == '+')) 
 			continue ;
 		if (s[i] == '.')
@@ -55,16 +55,19 @@ static bool	myStrToDF(const std::string &s, int sLen) {
 				return (false);
 			if (!isdigit(s[i - 1]) || !isdigit(s[i + 1]))
 				return (false);
-			dot++;
+			// dot++;
 		} else if (!isdigit(s[i])){
 			return (false);
 		}
 	}
 
-	if (dot == 1)
-		return(true);
+	// if (dot == 1){
+	// 	std::cout << "hi from the dot" << std::endl;
+	std::cout << "before the end" << std::endl;
+	return(true);
+	// }
 
-	return (false);
+	// return (false);
 };
 
 // printing functions
@@ -221,22 +224,18 @@ static void	printStringLength(const std::string &s)
 
 static int	evalEndsOnF(const std::string &s) {
 
-	std::cout << "evalEndsOnF" << std::endl;
+	// std::cout << "evalEndsOnF" << std::endl;
 
 	int sLen = s.length() - 1;
-	// int dot = 0;
 	char *end = nullptr;
 	double value = strtod(s.c_str(), &end);
 
 	if (end == s.c_str())
 		return (-1);
 	if (end[0] != 'f' || end[1] != '\0') {
-		std::cout << "end != f" << std::endl;
+		// std::cout << "end != f" << std::endl;
 		return (-1);
 	}
-	// std::cout << "end = " << end << std::endl;
-	// std::cout << "sLen F = " << sLen << std::endl;
-
 	if (myStrToDF(s, sLen))
 		return (1);
 	
@@ -272,7 +271,7 @@ static int	evalStrinIntDouble(const std::string &s) {
 	// if (noAllDigit == 0)
 	// 	return (1);
 	if (isOnlyDigit(s)){
-		std::cout << "only digit" << "<"<<std::endl;
+		// std::cout << "only digit" << "<"<<std::endl;
 
 		return (1);
 	}
