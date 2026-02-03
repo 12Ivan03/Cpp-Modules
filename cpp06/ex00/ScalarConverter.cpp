@@ -29,8 +29,8 @@ std::string	myTrimString(const std::string &str) {
 
 static bool	myStrToDF(const std::string &s, int sLen) {
 
-	int dot = 0;
-	int noAllDigit = 0;
+	// int dot = 0;
+	// int noAllDigit = 0;
 
 	for (int i = sLen - 1; i >= 0; i--) {
 		if (i == 0 && (s[i] == '-' || s[i] == '+')) 
@@ -41,19 +41,20 @@ static bool	myStrToDF(const std::string &s, int sLen) {
 				return (false);
 			if (!isdigit(s[i - 1]) || !isdigit(s[i + 1]))
 				return (false);
-			dot++;
-		} else if (!isdigit(s[i]))
+			// dot++;
+		} else if (!isdigit(s[i])){
 			return (false);
-		if (!isdigit(s[i]))
-			noAllDigit++;
+		}
+		// if (!isdigit(s[i]))
+		// 	noAllDigit++;
 	}
 
-	if (noAllDigit == 0)
+	// if (noAllDigit == 0)
 		return (true);
-	else if (dot == 1)
-		return(true);
+	// else if (dot == 1)
+	// 	return(true);
 
-	return (false);
+	// return (false);
 };
 
 // printing functions
