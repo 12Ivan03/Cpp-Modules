@@ -27,12 +27,26 @@ std::string	myTrimString(const std::string &str) {
 	return str.substr(start, end - start + 1);
 }
 
+static bool	isOnlyDigit(const std::string s) {
+
+	int sLen = s.length();
+	for (int i = 0; i < sLen; i++) {
+		std::cout << i << "s[i] == >" << s[i] << "<"<<std::endl;
+
+		if (!isdigit(s[i]))
+			return (false);
+	}
+	return (true);
+}
+
 static bool	myStrToDF(const std::string &s, int sLen) {
 
-	// int dot = 0;
-	// int noAllDigit = 0;
+	int dot = 0;
+		std::cout  << "sLen == >" << sLen << "<"<<std::endl;
 
 	for (int i = sLen - 1; i >= 0; i--) {
+		std::cout << i << "s[i] == >" << s[i] << "<"<<std::endl;
+
 		if (i == 0 && (s[i] == '-' || s[i] == '+')) 
 			continue ;
 		if (s[i] == '.')
@@ -41,20 +55,16 @@ static bool	myStrToDF(const std::string &s, int sLen) {
 				return (false);
 			if (!isdigit(s[i - 1]) || !isdigit(s[i + 1]))
 				return (false);
-			// dot++;
+			dot++;
 		} else if (!isdigit(s[i])){
 			return (false);
 		}
-		// if (!isdigit(s[i]))
-		// 	noAllDigit++;
 	}
 
-	// if (noAllDigit == 0)
-		return (true);
-	// else if (dot == 1)
-	// 	return(true);
+	if (dot == 1)
+		return(true);
 
-	// return (false);
+	return (false);
 };
 
 // printing functions
@@ -211,7 +221,7 @@ static void	printStringLength(const std::string &s)
 
 static int	evalEndsOnF(const std::string &s) {
 
-	// std::cout << "evalEndsOnF" << std::endl;
+	std::cout << "evalEndsOnF" << std::endl;
 
 	int sLen = s.length() - 1;
 	// int dot = 0;
@@ -221,7 +231,7 @@ static int	evalEndsOnF(const std::string &s) {
 	if (end == s.c_str())
 		return (-1);
 	if (end[0] != 'f' || end[1] != '\0') {
-		// std::cout << "end != f" << std::endl;
+		std::cout << "end != f" << std::endl;
 		return (-1);
 	}
 	// std::cout << "end = " << end << std::endl;
@@ -243,14 +253,14 @@ static void	printEndsOnF(const std::string &s) {
 
 static int	evalStrinIntDouble(const std::string &s) {
 
-	// std::cout << "evalStrinIntDouble" << std::endl;
+	std::cout << "evalStrinIntDouble" << std::endl;
 
 	int sLen = s.length();
 	char *end = nullptr;
 	double value = strtod(s.c_str(), &end);
 	int noAllDigit = 0;
 
-	// std::cout << "end[0] == 0 >" << end << "<"<<std::endl;
+	std::cout << "end[0] == 0 >" << end << "<"<<std::endl;
 	// std::cout << "sLen == 0 >" << sLen << "<"<<std::endl;
 
 	// for (int i = 0; i < sLen; i++) {
@@ -261,6 +271,11 @@ static int	evalStrinIntDouble(const std::string &s) {
 	// }
 	// if (noAllDigit == 0)
 	// 	return (1);
+	if (isOnlyDigit(s)){
+		std::cout << "only digit" << "<"<<std::endl;
+
+		return (1);
+	}
 	if (!myStrToDF(s, sLen))
 		return (-1);
 	if (end == s.c_str())
