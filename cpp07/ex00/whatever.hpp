@@ -1,4 +1,7 @@
 
+#ifndef WHATEVER_HPP
+#define WHATEVER_HPP
+
 #include "iostream"
 
 template <typename T>
@@ -25,3 +28,5 @@ T& max(T& x, T& y) {
 }
 
 // STL - Standard Template Library
+
+#endif
