@@ -14,6 +14,7 @@ void	iter(T* array, const int len, F func) {
 	}
 }
 
+
 template <typename T, typename F>
 void	iter(const T* array, const int len, F func) {
 
