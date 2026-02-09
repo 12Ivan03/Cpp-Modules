@@ -5,7 +5,7 @@ CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g3
 SRC_FILES = main.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = whatever
+NAME = iter
 
 all: $(NAME)
 
