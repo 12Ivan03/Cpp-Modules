@@ -4,6 +4,7 @@
 
 #include "iostream"
 
+// STL - Standard Template Library
 template <typename T>
 void	swap(T& x, T& y) {
 	T temp = x;
@@ -11,22 +12,20 @@ void	swap(T& x, T& y) {
 	y = temp;
 }
 
-template <typename T>
-T& min(T& x, T& y) {
+template <typename K>
+K& min(K& x, K& y) {
 
 	if (x < y)
 		return x;
 	return y;
 }
 
-template <typename T>
-T& max(T& x, T& y) {
+template <typename P>
+P& max(P& x, P& y) {
 
 	if (x > y)
 		return x;
 	return y;
 }
-
-// STL - Standard Template Library
 
 #endif
