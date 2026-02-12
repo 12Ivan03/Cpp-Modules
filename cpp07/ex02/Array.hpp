@@ -20,8 +20,9 @@ class Array {
 		Array &operator=(const Array &other);
 		~Array();
 
-		T& operator[](int idx);
-		T& operator[](int idx) const;
+		T&				operator[](unsigned int idx);
+		const T&		operator[](unsigned int idx) const;
+		unsigned int	size() const;
 };
 
 #include "Array.tpp"
