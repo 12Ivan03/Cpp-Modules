@@ -3,11 +3,18 @@
 #define EASYFIND_HPP
 
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include <array>
+#include <deque>
+#include <list>
+#include <forward_list>
+#include <exception>
 
-class Easyfind {
-
-};
+template <typename T>
+typename T::iterator easyfind(T& con, int find);
 
 #include "easyfind.tpp"
 
 #endif
+
