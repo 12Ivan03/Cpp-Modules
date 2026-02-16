@@ -4,6 +4,10 @@
 
 #include <iostream>
 #include <vector>
+#include <random>
+#include <iterator>
+#include <stdexcept>
+#include <limits.h>
 
 class Span {
 
@@ -13,7 +17,7 @@ class Span {
 
 	public:
 
-		// Span();
+		Span() = delete;
 		Span(unsigned int nAmount);
 		Span(const Span &other);
 		Span &operator=(const Span &other);
@@ -21,34 +25,21 @@ class Span {
 
 		void	addNumber(int num);
 		int		getData(int idx);
-		// void	printSpan(Span& span);
-		// shortestSpan();
-		// longestSpan();
-		// range();
-		// range(size_t name.begin(), size_t name.end());
+		size_t	getSize();
 
+		template <typename It>
+		void	range(It begin, It end) {
+
+			size_t addElements = std::distance(begin, end);
+			if (_data.size() + addElements > _nAmount)
+				throw std::runtime_error("range: Not enough space");
+
+			_data.insert(_data.end(), begin, end);
+		};
+		int		shortestSpan() const;
+		int		longestSpan() const;
 };
 
 std::ostream& operator<<(std::ostream& oS, Span& sp);
 
 #endif
-
-
-
-
-/*
-
-	1. class Span
-		- store N integers -> unsigned int _nAmount
-				-> only par passed through constructor;
-
-		- Member functions: 
-			-addNumber(); -> add a single number to the Span; 
-							if (more than _nAmount)
-								throw;
-
-			- shortestSpan();
-
-			- longestSpan();
-
-*/
