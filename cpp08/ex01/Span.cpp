@@ -1,6 +1,8 @@
 
 #include "Span.hpp"
 
+// STL algorithms = STL communicates through iterators
+
 Span::Span(unsigned int nAmount) : _nAmount(nAmount) {
 	_data.reserve(nAmount);
 };

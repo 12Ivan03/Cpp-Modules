@@ -6,6 +6,11 @@
 #include <cstddef>
 #include <exception>
 
+// class can depend on a type
+// Operator overloading work with tempaltes
+// Memory handling much work for any T
+//  Templates must be fully visible (.tpp)
+
 template <typename T>
 class Array {
 
