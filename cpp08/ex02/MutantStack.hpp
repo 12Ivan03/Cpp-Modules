@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stack>
 #include <deque>
+#include <list>
 
 // Container Adapter
 // Stack is wrapper -> by default uses deque<T>
