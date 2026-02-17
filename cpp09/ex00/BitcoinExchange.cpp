@@ -86,10 +86,10 @@ void    BitcoinExchange::handleLine(std::string line) {
     }
 
     const std::string stringDate = strTrim(line.substr(0, pos));
-    std::string stringRate = strTrim(line.substr(pos + 1));
+    const std::string stringRate = strTrim(line.substr(pos + 1));
 
     // std::cout << "stringDate =>" << stringDate << "<" << std::endl;
-    // std::cout << "stringRate =>" << stringRate << "<" << std::endl;
+    std::cout << "stringRate =>" << stringRate << "<" << std::endl;
 
     if (!isValidDate(stringDate)) {
         std::cout << "\nError: bad input => " << stringDate << "\n\n" << std::endl;
@@ -97,37 +97,21 @@ void    BitcoinExchange::handleLine(std::string line) {
     }
     
     
-    // isValieValue();
+    if (!isValieValue(stringRate)) {
+        std::cout << "\nError: bad input => " << (stringRate.empty() ? "empty" : stringRate) << "\n\n" << std::endl;
+        return ;
+    }
 
 
-    std::stringstream ss(stringRate);
-    double rate;
-    ss >> rate;
-    if (ss.fail())
-        throw std::runtime_error("invalid format: garbage information");
-    std::cout << "stringRate in double  =>" << std::fixed << rate << "<" << std::endl;
+    // std::stringstream ss(stringRate);
+    // double rate;
+    // ss >> rate;
+    // if (ss.fail())
+    //     throw std::runtime_error("invalid format: garbage information");
+    // std::cout << "stringRate in double  =>" << std::fixed << rate << "<" << std::endl;
         
 
-    std::cout << std::endl;
-};
-
-
-std::string BitcoinExchange::strTrim(std::string st) {
-
-    // std::cout << "st =>" << st << std::endl;
-
-    size_t start = 0;
-    size_t end = st.length();
-
-    while (start < st.length() && std::isspace(st[start]))
-        start++;
-    while (end > start && std::isspace(st[end - 1]))
-        end--;
-
-    // std::cout << "start =>" << start << "end =>" << end << std::endl;
-    std::string res = st.substr(start, end - start);
-    // std::cout << "res =>" << res << "<" << std::endl;
-    return res;
+    // std::cout << std::endl;
 };
 
 bool		BitcoinExchange::isValidDate(const std::string& dateStr) {
@@ -175,8 +159,47 @@ bool		BitcoinExchange::isValidDate(const std::string& dateStr) {
     return true;
 };
 
-bool		BitcoinExchange::isValieValue() {
+bool		BitcoinExchange::isValieValue(const std::string& rateStr) {
 
+    bool dot = false;
+
+    if (rateStr.empty())
+        return false;
+
+    if (rateStr[0] == '+')
+        return false;
+
+    // for (size_t i = 0; i < rateStr.length(); i++) {
+
+    //     if (i == 0 && rateStr[i] == '-')
+    //         continue ; 
+    //     if (rateStr[i] == '.') {
+    //         if (dot)
+    //             return false;
+    //         dot = true;
+    //         continue ;
+    //     }
+    //     if (!std::isdigit(static_cast<unsigned int>(rateStr[i]))){
+    //         // std::cout << "here123" << std::endl;
+    //         return false;
+    //     }
+    // }
+
+    std::stringstream ss(rateStr);
+    double rate;
+    ss >> rate;
+
+    if (ss.fail())
+        return false;
+    // std::cout << "stringRate in double  =>" << std::fixed << rate << "<" << std::endl;
+    // std::cout << std::endl;
+
+    std::string leftover;
+    if (ss >> leftover)
+        return false;
+    
+    if (rate < 0.0000 || rate > 1000.0000)
+        return false;
     return true;
 };
 
@@ -189,15 +212,32 @@ bool        BitcoinExchange::leapYear(int year) {
     return (year % 4 == 0);
 };
 
-// bool		BitcoinExchange::isStringOnlyNumber(const std::string& dateStr) {
+std::string BitcoinExchange::strTrim(std::string st) {
 
-//     for (int i = 0; i < dateStr.length() - 1; i++) {
-//         // std::cout << "!std::isalnum(dateStr[i]) =>" << !std::isalnum(dateStr[i]) << "<     ------      >" << 
-//         // "!(dateStr[i] == '-') =>" << !(dateStr[i] == '-') << std::endl;
+    // std::cout << "st =>" << st << std::endl;
 
-//         if (!std::isdigit(dateStr[i]) && dateStr[i] != '-')
-//             return false;
-//     }
-//     return true;
+    size_t start = 0;
+    size_t end = st.length();
 
-// };
+    while (start < st.length() && std::isspace(st[start]))
+        start++;
+    while (end > start && std::isspace(st[end - 1]))
+        end--;
+
+    // std::cout << "start =>" << start << "end =>" << end << std::endl;
+    std::string res = st.substr(start, end - start);
+    // std::cout << "res =>" << res << "<" << std::endl;
+    return res;
+};
+
+
+
+// 2011-01-03 | -3
+// 2011-01-03 | 2
+// 2011-01-03 | 1
+// 2011-01-03 | 1.2
+// 2011-01-09 | 1
+// 2012-01-11 | -1
+// 2001-42-42 |
+// 2012-01-11 | 1
+// 2012-11-11 | 2147483648

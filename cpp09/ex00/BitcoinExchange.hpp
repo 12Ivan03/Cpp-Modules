@@ -23,8 +23,7 @@ class BitcoinExchange {
 		void		handleLine(std::string line);
 		std::string	strTrim(std::string st);
 		bool		isValidDate(const std::string& dateStr);
-    	bool		isValieValue();
-		// bool		isStringOnlyNumber(const std::string& dateStr);
+    	bool		isValieValue(const std::string& rateStr);
 		bool		leapYear(int year);
 
 	public:
