@@ -2,10 +2,10 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g3
 
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp BitcoinExchange.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = 
+NAME = btc
 
 all: $(NAME)
 
