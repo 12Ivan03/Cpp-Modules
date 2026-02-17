@@ -15,6 +15,10 @@
 
 #include <iomanip>
 
+// !!!! IMPORTANT !!!!
+// REMOVE THE DATA_FILE AND INPUT_FILE FROM EX00 !!!!!!!!!!!!!!
+
+
 class BitcoinExchange {
 
 	private:
