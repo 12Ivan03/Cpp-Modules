@@ -195,7 +195,7 @@ double	BitcoinExchange::datebaseSearch(const std::string &stringDate) {
 	return it->second;
 };
 
-// private : helper functions
+// private : helper functions / errorMessage()
 
 void	BitcoinExchange::printResult(const std::string &stringDate, double &inputValue, double &dbValue) {
 
