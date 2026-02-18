@@ -27,8 +27,11 @@ class BitcoinExchange {
 		void		handleLine(std::string line);
 		std::string	strTrim(std::string st);
 		bool		isValidDate(const std::string& dateStr);
-    	bool		isValieValue(const std::string& rateStr);
+		bool		isValieValue(const std::string& rateStr, double &value);
+		double		datebaseSearch(const std::string &stringDate);
+		void		printResult(const std::string &stringDate, double &stringRate, double &dbValue);
 		bool		leapYear(int year);
+		bool		errorMessage(int er);
 
 	public:
 		BitcoinExchange();

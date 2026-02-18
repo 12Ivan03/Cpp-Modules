@@ -24,14 +24,14 @@ void    BitcoinExchange::populateDatabase() {
 
     std::ifstream filein("./data_file/data_test.csv");
     if (!filein.is_open())
-        throw std::runtime_error(" cannot open file: data.csv");
+        throw std::runtime_error("data.csv: cannot open file: data.csv");
 
     std::getline(filein, line);
     while (std::getline(filein, line)) {
 
         size_t pos = line.find(",");
         if (pos == std::string::npos)
-            throw std::runtime_error("invalid format: missing comma");
+            throw std::runtime_error("data.csv: invalid format: missing comma");
         std::string strDate = line.substr(0, pos);
         std::string strRate = line.substr(pos + 1);
 
@@ -39,7 +39,11 @@ void    BitcoinExchange::populateDatabase() {
         double rate;
         ss >> rate;
         if (ss.fail())
-            throw std::runtime_error("invalid format: garbage information");
+            throw std::runtime_error("data.csv: invalid format: garbage information");
+		
+		std::string leftover;
+		if (ss >> leftover)
+			throw std::runtime_error("data.csv: invalid format: leftover garbage information");
 
         _database.insert(std::make_pair(strDate, rate));
     }
@@ -52,20 +56,16 @@ void    BitcoinExchange::populateDatabase() {
 
 void    BitcoinExchange::processInputFile(const std::string& inputFile) {
 
-    // std::cout << inputFile << std::endl;
     std::string line;
 
     std::ifstream filein(inputFile);
     if (!filein.is_open())
         throw std::runtime_error(" cannot open file: data.csv");
 
-    // std::getline(filein, line);
-    while (std::getline(filein, line)) {
-        // std::cout << line << std::endl;
+    while (std::getline(filein, line))
         handleLine(line);
-    }
 
-    if (!filein.eof()) 
+	if (!filein.eof()) 
         throw  std::runtime_error("unexpected read error here?");
 
     filein.close();
@@ -76,9 +76,8 @@ void    BitcoinExchange::processInputFile(const std::string& inputFile) {
 
 void    BitcoinExchange::handleLine(std::string line) {
 
-
-    std::cout << "handleLine ------> " << line << std::endl;
-
+	double inputValue;
+	double dbValue;
     size_t pos = line.find("|");
     if (pos == std::string::npos) {
         std::cout << "Error: bad input => " << line << std::endl;
@@ -88,118 +87,94 @@ void    BitcoinExchange::handleLine(std::string line) {
     const std::string stringDate = strTrim(line.substr(0, pos));
     const std::string stringRate = strTrim(line.substr(pos + 1));
 
-    // std::cout << "stringDate =>" << stringDate << "<" << std::endl;
-    std::cout << "stringRate =>" << stringRate << "<" << std::endl;
-
-    if (!isValidDate(stringDate)) {
-        std::cout << "\nError: bad input => " << stringDate << "\n\n" << std::endl;
+    if (!isValidDate(stringDate)) 
         return ;
-    }
-    
-    
-    if (!isValieValue(stringRate)) {
-        std::cout << "\nError: bad input => " << (stringRate.empty() ? "empty" : stringRate) << "\n\n" << std::endl;
+    if (!isValieValue(stringRate, inputValue)) 
         return ;
-    }
 
-
-    // std::stringstream ss(stringRate);
-    // double rate;
-    // ss >> rate;
-    // if (ss.fail())
-    //     throw std::runtime_error("invalid format: garbage information");
-    // std::cout << "stringRate in double  =>" << std::fixed << rate << "<" << std::endl;
-        
-
-    // std::cout << std::endl;
+	dbValue = datebaseSearch(stringDate);
+	if (dbValue == -1)
+		return ;
+	printResult(stringDate, inputValue, dbValue);
 };
 
 bool		BitcoinExchange::isValidDate(const std::string& dateStr) {
-    std::cout << "dateStr from isValidDate =>" << dateStr << "<" << std::endl;
 
     int allDaysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    if (dateStr.length() != 10){
-        // std::cout << "here" << std::endl;
-        return false;
-    }
+    if (dateStr.length() != 10)
+        return errorMessage(6);
 
+    if (dateStr[4] != '-' || dateStr[7] != '-')
+        return errorMessage(6);
 
-    if (dateStr[4] != '-' || dateStr[7] != '-'){
-        // std::cout << "here2" << std::endl;
-        return false;
-    }
-
-
-    for (size_t i = 0; i < dateStr.length() - 1; i++) {
-        // std::cout << "!std::isalnum(dateStr[i]) =>" << !std::isalnum(dateStr[i]) << "<     ------      >" << 
-        // "!(dateStr[i] == '-') =>" << !(dateStr[i] == '-') << std::endl;
-        if (!std::isdigit(dateStr[i]) && dateStr[i] != '-'){
-            // std::cout << "loop-here3" << std::endl;
-            return false;
-        }
-    }
-
+    for (size_t i = 0; i < dateStr.length(); i++) {
+        if (!std::isdigit(dateStr[i]) && dateStr[i] != '-')
+            return errorMessage(6);
+	}
     int year = std::atoi(dateStr.substr(0, 4).c_str());
     int month = std::atoi(dateStr.substr(5, 2).c_str());
     int day = std::atoi(dateStr.substr(8, 2).c_str());
 
-    if (month < 1 || month > 12){
-        // std::cout << "month-here4" << std::endl;
-        return false;
-    }
+    if (month < 1 || month > 12)
+        return errorMessage(5);
 
     int monthMaxLenght = allDaysInMonth[month - 1];
-    if (monthMaxLenght == 2 && leapYear(year))
+    if (month == 2 && leapYear(year))
         monthMaxLenght = 29;
 
     if (day < 1 || day > monthMaxLenght)
-        return false;
+        return errorMessage(4);
 
     return true;
 };
 
-bool		BitcoinExchange::isValieValue(const std::string& rateStr) {
+bool		BitcoinExchange::isValieValue(const std::string& rateStr, double &value) {
 
     bool dot = false;
 
     if (rateStr.empty())
-        return false;
+        return errorMessage(3);
 
     if (rateStr[0] == '+')
-        return false;
+        return errorMessage(3);
 
-    // for (size_t i = 0; i < rateStr.length(); i++) {
+    for (size_t i = 0; i < rateStr.length(); i++) {
 
-    //     if (i == 0 && rateStr[i] == '-')
-    //         continue ; 
-    //     if (rateStr[i] == '.') {
-    //         if (dot)
-    //             return false;
-    //         dot = true;
-    //         continue ;
-    //     }
-    //     if (!std::isdigit(static_cast<unsigned int>(rateStr[i]))){
-    //         // std::cout << "here123" << std::endl;
-    //         return false;
-    //     }
-    // }
+        if (i == 0 && rateStr[i] == '-')
+            continue ; 
+        if (rateStr[i] == '.') {
+            if (dot)
+                return errorMessage(3);
+            if (i == 0)
+                return errorMessage(3);
+            if (i + 1 >= rateStr.length())
+                return errorMessage(3);
+            if (!std::isdigit(static_cast<unsigned char>(rateStr[i - 1])) || 
+                !std::isdigit(static_cast<unsigned char>(rateStr[i + 1])))
+                return errorMessage(3);
+            dot = true;
+            continue ;
+        }
+        if (!std::isdigit(static_cast<unsigned char>(rateStr[i])))
+            return errorMessage(3);
+    }
 
     std::stringstream ss(rateStr);
     double rate;
     ss >> rate;
-
     if (ss.fail())
-        return false;
-    // std::cout << "stringRate in double  =>" << std::fixed << rate << "<" << std::endl;
-    // std::cout << std::endl;
+        return errorMessage(3);
 
     std::string leftover;
     if (ss >> leftover)
-        return false;
-    
-    if (rate < 0.0000 || rate > 1000.0000)
-        return false;
+        return errorMessage(3);
+
+    if (rate < 0.0000)
+        return errorMessage(1);
+    if (rate > 1000.0000)
+        return errorMessage(2);
+	value = rate;
     return true;
 };
 
@@ -214,8 +189,6 @@ bool        BitcoinExchange::leapYear(int year) {
 
 std::string BitcoinExchange::strTrim(std::string st) {
 
-    // std::cout << "st =>" << st << std::endl;
-
     size_t start = 0;
     size_t end = st.length();
 
@@ -224,13 +197,55 @@ std::string BitcoinExchange::strTrim(std::string st) {
     while (end > start && std::isspace(st[end - 1]))
         end--;
 
-    // std::cout << "start =>" << start << "end =>" << end << std::endl;
     std::string res = st.substr(start, end - start);
-    // std::cout << "res =>" << res << "<" << std::endl;
     return res;
 };
 
+double		BitcoinExchange::datebaseSearch(const std::string &stringDate) {
 
+	std::map<std::string, double>::const_iterator it = _database.lower_bound(stringDate);
+
+	if (it == _database.end()) {
+		--it;
+	} else if (it->first != stringDate) {
+
+		if (it == _database.begin()) {
+			return (errorMessage(7), -1);
+		}
+		--it;
+	}
+	std::cout << "the found coresponding date from the _database: " << it->first << std::endl;
+	return it->second;
+};
+
+
+void		BitcoinExchange::printResult(const std::string &stringDate, double &inputValue, double &dbValue) {
+
+	double res = inputValue * dbValue;
+	std::cout << stringDate << " => " << inputValue << " = " << res << std::endl;
+}
+
+bool		BitcoinExchange::errorMessage(int er) {
+
+	std::cout << "Error: ";
+	if (er == 1)
+		std::cout << "not a positive number." << std::endl;
+	if (er == 2)
+		std::cout << "too large a number." << std::endl;
+	if (er == 3)
+		std::cout << "wrong input: not a valid number" << std::endl;
+	if (er == 4)
+		std::cout << "invalid day of the month" << std::endl;
+	if (er == 5)
+		std::cout << "invalide month of the year" << std::endl;
+	if (er == 6)
+		std::cout << "invalud date format: YYYY-MM-DD" << std::endl;
+	if (er == 7)
+		std::cout << "the input date is smaller than the smallest key in the map" << std::endl;
+	// if (er == 1)
+	// 	std::cout << "" << std::endl;
+	return false;
+}
 
 // 2011-01-03 | -3
 // 2011-01-03 | 2
