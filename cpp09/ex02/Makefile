@@ -2,10 +2,10 @@
 CC = c++
 CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g3
 
-SRC_FILES = main.cpp RPN.cpp
+SRC_FILES = main.cpp PmergeMe.cpp
 
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
-NAME = RPN
+NAME = PmergeMe
 
 all: $(NAME)
 
