@@ -17,6 +17,7 @@
 
 // !!!! IMPORTANT !!!!
 // REMOVE THE DATA_FILE AND INPUT_FILE FROM EX00 !!!!!!!!!!!!!!
+// standart error std::
 
 
 class BitcoinExchange {
