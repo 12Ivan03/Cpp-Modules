@@ -59,12 +59,23 @@
 #include <deque>
 #include <utility>
 #include <sstream>
+#include <chrono>
+#include <climits>
+#include <iomanip>
 
 class PmergeMe {
 
 	private:
-		std::vector<std::pair<int, int>> _vec;
-		std::deque<std::pair<int, int>> _deq;
+		std::vector<int> _vec;
+		std::deque<int> _deq;
+
+		void    validateInput(int argc, char *argv[]);
+		void    printContainer(int n, int when);
+		void    sortByFordJohnsonVector();
+		void    sortByFordJohnsonDeque();
+
+		// void    populateContainers(int argc, char *argv[]);
+
 
 	public:
 		PmergeMe() = delete;
