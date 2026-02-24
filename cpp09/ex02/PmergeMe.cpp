@@ -8,116 +8,170 @@
 PmergeMe::PmergeMe(const PmergeMe &other) : _vec(other._vec), _deq(other._deq) {};
 
 PmergeMe& PmergeMe::operator=(const PmergeMe &other) {
-    
-    if (this != &other) {
-        this->_vec = other._vec;
-        this->_deq = other._deq;
-    }
-    return *this;
+		
+	if (this != &other) {
+		this->_vec = other._vec;
+		this->_deq = other._deq;
+	}
+	return *this;
 };
 
 PmergeMe::~PmergeMe() {};
 
 PmergeMe::PmergeMe(int argc, char *argv[]) {
 
-    validateInput(argc, argv);
+	validateInput(argc, argv);
 
-    printContainer(1, 1);
-    auto startVec = std::chrono::high_resolution_clock::now();
-    sortByFordJohnsonVector();
-    auto stopVec = std::chrono::high_resolution_clock::now();
-    printContainer(1, 2);
-    double durationVec = std::chrono::duration<double>(stopVec - startVec).count();
+	printContainer(1, 1);
+	auto startVec = std::chrono::high_resolution_clock::now();
+	_vec = sortByFordJohnsonVector(_vec);
+	auto stopVec = std::chrono::high_resolution_clock::now();
+	printContainer(1, 2);
+	double durationVec = std::chrono::duration<double>(stopVec - startVec).count();
 
-    printContainer(2, 1);
-    auto startDeq = std::chrono::high_resolution_clock::now();
-    sortByFordJohnsonDeque();
-    sleep(10);
-    auto stopDeq = std::chrono::high_resolution_clock::now();
-    printContainer(2, 2);
+	printContainer(2, 1);
+	auto startDeq = std::chrono::high_resolution_clock::now();
+	_deq = sortByFordJohnsonDeque();
+	sleep(1);
+	auto stopDeq = std::chrono::high_resolution_clock::now();
+	printContainer(2, 2);
+	double durationDeq = std::chrono::duration<double>(stopDeq - startDeq).count();
+	// auto durationDeq = std::chrono::duration_cast<std::chrono::microseconds>(stopDeq - startDeq);
 
-    double durationDeq = std::chrono::duration<double>(stopDeq - startDeq).count();
-    // auto durationDeq = std::chrono::duration_cast<std::chrono::microseconds>(stopDeq - startDeq);
-
-    std::cout << std::fixed << std::setprecision(6);
-    std::cout  << "Time to process a range of " 
-                << _vec.size() 
-                << " elements with std::vector<int> : " 
-                << durationVec
-                << " us" << std::endl;
-    std::cout  << "Time to process a range of " 
-                << _deq.size() << " elements with std::deque<int> : " 
-                << durationDeq 
-                << " us" 
-                << std::endl;
-    std::cout << std::defaultfloat;
+	std::cout << std::fixed << std::setprecision(6);
+	std::cout  << "Time to process a range of " 
+				<< _vec.size() 
+				<< " elements with std::vector<int> : " 
+				<< durationVec
+				<< " us" << std::endl;
+	std::cout  << "Time to process a range of " 
+				<< _deq.size() << " elements with std::deque<int> : " 
+				<< durationDeq 
+				<< " us" 
+				<< std::endl;
+	std::cout << std::defaultfloat;
 
 };
 
-void    PmergeMe::sortByFordJohnsonVector() {
+// main logic
 
-    // sort sort sort VECTOR
+void	PmergeMe::validateInput(int argc, char *argv[]) {
+
+	if (argc <= 1)
+		throw std::runtime_error("correct input: ./Program \' shuf -i LO-HI -n N || jot -r 1 $min $max \'");
+		
+	for (int i = 1; i < argc; i++) {
+
+		std::istringstream argvString(argv[i]);
+		std::string s;
+
+		while (argvString >> s) {
+			std::istringstream conv(s);
+			long long num = 0;
+			conv >> num;
+			if (!s.empty() && s[0] == '+')
+				throw std::runtime_error("incorrect input 1 ");
+			if (conv.fail())
+				throw std::runtime_error("incorrect input 2 ");
+			std::string leftover;
+			if (conv >> leftover)
+				throw std::runtime_error("incorrect input 3 ");
+
+			if (num <= 0)
+				throw std::runtime_error("only positive numbers");
+			if (num > INT_MAX)
+				throw std::runtime_error("very large positve number");
+
+			_vec.push_back(static_cast<int>(num));
+			_deq.push_back(static_cast<int>(num));
+		}
+	}
 };
 
-void    PmergeMe::sortByFordJohnsonDeque() {
+std::vector<int>	PmergeMe::sortByFordJohnsonVector(std::vector<int> vecInProgress) {
 
-    // DEQUE sort here :P
+	if (vecInProgress.size() <= 1)
+		return vecInProgress;
+
+	std::vector<std::pair<int, int>> pairVector;
+	int		oddVecLenght = -1;
+
+	size_t i = 0;
+	for (; i + 1 < vecInProgress.size(); i += 2) {
+		int a = vecInProgress[i];
+		int b = vecInProgress[i + 1];
+		if (a >= b)
+			pairVector.push_back(std::make_pair(a, b));
+		else
+			pairVector.push_back(std::make_pair(b, a));
+	}
+
+	if (i < vecInProgress.size())
+		oddVecLenght = vecInProgress[i];
+
+	std::vector<int> lList = extractLargePairs(pairVector);
+	std::vector<int> nextLevel = sortByFordJohnsonVector(lList);
+
+	vecInProgress = insertOrder(nextLevel, pairVector);
+
+	if (oddVecLenght != -1) {
+		std::vector<int>::iterator pos = std::lower_bound(vecInProgress.begin(), vecInProgress.end(), oddVecLenght);
+		vecInProgress.insert(pos, oddVecLenght);
+	}
+
+	return vecInProgress;
 };
 
-void    PmergeMe::printContainer(int n, int when) {
+std::deque<int>	PmergeMe::sortByFordJohnsonDeque() {
 
-    if (when == 1)
-        std::cout << "Before: ";
-    else 
-        std::cout << "After: ";
-    if (n == 1) {
-        for (std::vector<int>::iterator it = _vec.begin(); it != _vec.end(); ++it) {
-	    	std::cout << *it << " ";
-    	}
-        std::cout << std::endl;
-    } else {
-        for (std::deque<int>::iterator it = _deq.begin(); it != _deq.end(); ++it) {
-		    std::cout << *it << " ";
-	    }
-        std::cout << std::endl;
-
-    }
+	// DEQUE sort here :P
+	return _deq;
 };
 
-void    PmergeMe::validateInput(int argc, char *argv[]) {
+// helper fuctions
 
-    if (argc <= 1)
-        throw std::runtime_error("correct input: ./Program \' shuf -i LO-HI -n N || jot -r 1 $min $max \'");
-    
-    for (int i = 1; i < argc; i++) {
+std::vector<int>	PmergeMe::insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector) {
 
-        std::istringstream argvString(argv[i]);
-        std::string s;
+	for (size_t i = 0; i < pairVector.size(); i++) {
+		
+		int small = pairVector[i].second;
+		int big = pairVector[i].first;
 
-        while (argvString >> s) {
-            
-            std::cout << "s is => >" << s << "<" << std::endl;
+		std::vector<int>::iterator posBig = std::lower_bound(nextLevel.begin(), nextLevel.end(), big);
+		std::vector<int>::iterator pos = std::lower_bound(nextLevel.begin(), posBig, small);
 
-            std::istringstream conv(s);
-            long long num = 0;
-            conv >> num;
-            if (!s.empty() && s[0] == '+')
-                throw std::runtime_error("incorrect input 1 ");
-            if (conv.fail())
-                throw std::runtime_error("incorrect input 2 ");
-            std::string leftover;
-            if (conv >> leftover)
-                throw std::runtime_error("incorrect input 3 ");
+		nextLevel.insert(pos, small);
+	}
+	return nextLevel;
+};
 
-            if (num <= 0)
-                throw std::runtime_error("only positive numbers");
-            if (num > INT_MAX)
-                throw std::runtime_error("very large positve number");
+std::vector<int>	PmergeMe::extractLargePairs(std::vector<std::pair<int, int>> pairVector) {
 
-            _vec.push_back(static_cast<int>(num));
-            _deq.push_back(static_cast<int>(num));
-        }
-        // std::cout << "all good" << std::endl;
-    }
+	std::vector<int> extrLarge;
+
+	for (size_t i = 0; i < pairVector.size(); i++)
+		extrLarge.push_back(pairVector[i].first);
+	return extrLarge;
+};
+
+
+void	PmergeMe::printContainer(int n, int when) {
+
+	if (when == 1)
+		std::cout << "Before: ";
+	else 
+		std::cout << "After: ";
+	if (n == 1) {
+		for (std::vector<int>::iterator it = _vec.begin(); it != _vec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+	} else {
+		for (std::deque<int>::iterator it = _deq.begin(); it != _deq.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+
+	}
 };
 
