@@ -22,21 +22,17 @@ PmergeMe::PmergeMe(int argc, char *argv[]) {
 
 	validateInput(argc, argv);
 
-	printContainer(1, 1);
+	printContainer(2, 1);
 	auto startVec = std::chrono::high_resolution_clock::now();
 	_vec = sortByFordJohnsonVector(_vec);
 	auto stopVec = std::chrono::high_resolution_clock::now();
-	printContainer(1, 2);
 	double durationVec = std::chrono::duration<double>(stopVec - startVec).count();
 
-	printContainer(2, 1);
 	auto startDeq = std::chrono::high_resolution_clock::now();
-	_deq = sortByFordJohnsonDeque();
-	sleep(1);
+	_deq = sortByFordJohnsonDeque(_deq);
 	auto stopDeq = std::chrono::high_resolution_clock::now();
-	printContainer(2, 2);
 	double durationDeq = std::chrono::duration<double>(stopDeq - startDeq).count();
-	// auto durationDeq = std::chrono::duration_cast<std::chrono::microseconds>(stopDeq - startDeq);
+	printContainer(1, 2);
 
 	std::cout << std::fixed << std::setprecision(6);
 	std::cout  << "Time to process a range of " 
@@ -122,14 +118,67 @@ std::vector<int>	PmergeMe::sortByFordJohnsonVector(std::vector<int> vecInProgres
 	return vecInProgress;
 };
 
-std::deque<int>	PmergeMe::sortByFordJohnsonDeque() {
+std::deque<int>	PmergeMe::sortByFordJohnsonDeque(std::deque<int> deqInProgress) {
 
-	// DEQUE sort here :P
-	return _deq;
+	if (deqInProgress.size() <= 1)
+		return deqInProgress;
+
+	std::deque<std::pair<int, int>> pairDeque;
+	int oddDequeLength = -1;
+
+	size_t i = 0;
+	for (; i + 1 < deqInProgress.size(); i += 2) {
+
+		int a = deqInProgress[i];
+		int b = deqInProgress[i + 1];
+		if (a >= b) {
+			pairDeque.push_back(std::make_pair(a, b));
+		} else {
+			pairDeque.push_back(std::make_pair(b, a));
+		}
+	}
+
+	if (i < deqInProgress.size())
+		oddDequeLength = deqInProgress[i];
+
+	std::deque<int> lList = extractLargePairDeq(pairDeque);
+	std::deque<int> nextLevel = sortByFordJohnsonDeque(lList);
+	
+	deqInProgress = insertDeqOrder(nextLevel, pairDeque);
+
+	if (oddDequeLength != -1) {
+		std::deque<int>::iterator pos = std::lower_bound(deqInProgress.begin(), deqInProgress.end(), oddDequeLength);
+		deqInProgress.insert(pos, oddDequeLength); 
+	}
+	return deqInProgress;
 };
 
 // helper fuctions
+//deque
+std::deque<int>		PmergeMe::extractLargePairDeq(std::deque<std::pair<int, int>> pairDeque) {
 
+	std::deque<int> extrLargeNum;
+
+	for (size_t i = 0; i < pairDeque.size(); i++) 
+		extrLargeNum.push_back(pairDeque[i].first);
+	return extrLargeNum;
+};
+
+std::deque<int>		PmergeMe::insertDeqOrder(std::deque<int> nextLevel, std::deque<std::pair<int, int>> pairDeque) {
+
+	for (size_t i = 0; i < pairDeque.size(); i++) {
+		int small = pairDeque[i].second;
+		int big = pairDeque[i].first;
+
+		std::deque<int>::iterator posBig = std::lower_bound(nextLevel.begin(), nextLevel.end(), big);
+		std::deque<int>::iterator pos = std::lower_bound(nextLevel.begin(), posBig, small);
+
+		nextLevel.insert(pos, small);
+
+	}
+	return nextLevel;
+};
+//vector
 std::vector<int>	PmergeMe::insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector) {
 
 	for (size_t i = 0; i < pairVector.size(); i++) {

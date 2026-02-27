@@ -120,9 +120,11 @@ class PmergeMe {
 		void				validateInput(int argc, char *argv[]);
 		void				printContainer(int n, int when);
 		std::vector<int>	sortByFordJohnsonVector(std::vector<int> sortVec);
-		std::deque<int>		sortByFordJohnsonDeque();
+		std::deque<int>		sortByFordJohnsonDeque(std::deque<int> deqInProgress);
 		std::vector<int>	extractLargePairs(std::vector<std::pair<int, int>> pairVector);
+		std::deque<int>		extractLargePairDeq(std::deque<std::pair<int, int>> pairDeque);		
 		std::vector<int>	insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector);
+		std::deque<int>		insertDeqOrder(std::deque<int> nextLevel, std::deque<std::pair<int, int>> pairDeque);
 
 	public:
 		PmergeMe() = delete;
