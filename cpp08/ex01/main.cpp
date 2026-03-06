@@ -102,7 +102,7 @@ int	main(void) {
 			}
 			sp.range(v.begin(), v.end());
 			std::cout << sp << std::endl;
-
+// add a better example of range.
 
 
 		} catch (const std::exception& e) {
