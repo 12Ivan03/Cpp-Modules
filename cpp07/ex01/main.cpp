@@ -4,7 +4,7 @@
 template <typename K>
 void	myPrintf(const K& value) {
 
-	std::cout << value << " ";
+	std::cout << value << "\n";
 }
 
 // template <typename K>

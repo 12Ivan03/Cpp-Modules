@@ -3,93 +3,112 @@
 
 int	main(void) {
 
-	std::cout << "__________________________________________" << std::endl;
-	std::cout << "New -> check " << std::endl;
-	Array<int> check(12);
+	// {
+	// 	std::cout << "__________________________________________" << std::endl;
+	// 	std::cout << "New -> 0 check " << std::endl;
 
-	for (unsigned int i = 0; i < 12; i++) {
-		check[i] = i + 100;
+	// 	Array<int> sven;
+	// 	std::cout << "sven.size() = " << sven.size() << std::endl;
+	// 	Array<int> sven2;
+	// 	sven = sven2;
+	// 	std::cout << "sven2.size() = " << sven2.size() << std::endl;
+	// }
+
+	{
+
+		std::cout << "__________________________________________" << std::endl;
+		std::cout << "New -> check " << std::endl;
+		Array<int> check(12);
+
+		for (unsigned int i = 0; i < 12; i++) {
+			check[i] = i + 100;
+		}
+
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << check[i] << std::endl;
+		}
+
+		std::cout << "__________________________________________" << std::endl;
+		std::cout << "New -> create checkJuniour(check) // and checkJuniour = check //" << std::endl;
+		Array<int> checkJuniour;
+		checkJuniour = check;
+
+		std::cout << "1.checkJuniour - > " << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << checkJuniour[i] << std::endl;
+		}
+
+		std::cout << "1.1.checkJuniour modified + 200:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			checkJuniour[i] += 200;
+		}
+
+		std::cout << "1.2.checkJuniour - > show modification:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout<< "\t"  << checkJuniour[i] << std::endl;
+		}
+
+		std::cout << "1.3.check - > show check is not efected:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << check[i] << std::endl;
+		}
+
+		// Midd section 
+
+		std::cout << "__________________________________________" << std::endl;
+		std::cout << "New -> create checkJuniourJuniour = check " << std::endl;
+		Array<int> checkJuniourJuniour(check);
+		
+		std::cout << "2.checkJuniourJuniour - > " << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << checkJuniourJuniour[i] << std::endl;
+		}
+
+		std::cout << "2.1.checkJuniourJuniour modified + 500:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			checkJuniourJuniour[i] += 500;
+		}
+
+		std::cout << "2.2.checkJuniourJuniour - > show modification:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << checkJuniourJuniour[i] << std::endl;
+		}
+
+		std::cout << "2.3.check - > show check is not efected:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << check[i] << std::endl;
+		}
 	}
 
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << check[i] << std::endl;
-	}
+	{
+		std::cout << "__________________________________________" << std::endl;
+		std::cout << "New -> create word Array -> Alisa " << std::endl;
+		Array<char> alisa(12);
+		for (unsigned int i = 0; i < 12; i++) {
+			alisa[i] = (char)(97 + i);
+		}
 
-	std::cout << "__________________________________________" << std::endl;
-	std::cout << "New -> create checkJuniour(check) " << std::endl;
-	Array<int> checkJuniour(check);
-	
-	std::cout << "1.checkJuniour - > " << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << checkJuniour[i] << std::endl;
-	}
+		Array<char> alisaJuniour(alisa);
+		
+		std::cout << "3.alisaJuniour - > alisaJuniour(alisa) " << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << alisaJuniour[i] << std::endl;
+		}
 
-	std::cout << "1.1.checkJuniour modified + 200:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		checkJuniour[i] += 200;
-	}
+		std::cout << "3.1.alisaJuniour modified = 65 + 1:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			alisaJuniour[i] = (char)65 + i;
+		}
 
-	std::cout << "1.2.checkJuniour - > show modification:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << checkJuniour[i] << std::endl;
-	}
+		std::cout << "3.2.alisaJuniour - > show modification:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << alisaJuniour[i] << std::endl;
+		}
 
-	std::cout << "1.3.check - > show check is not efected:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << check[i] << std::endl;
-	}
-
-	std::cout << "__________________________________________" << std::endl;
-	std::cout << "New -> create checkJuniourJuniour = check " << std::endl;
-	Array<int> checkJuniourJuniour(check);
-	
-	std::cout << "2.checkJuniourJuniour - > " << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << checkJuniourJuniour[i] << std::endl;
-	}
-
-	std::cout << "2.1.checkJuniourJuniour modified + 500:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		checkJuniourJuniour[i] += 500;
-	}
-
-	std::cout << "2.2.checkJuniourJuniour - > show modification:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << checkJuniourJuniour[i] << std::endl;
-	}
-
-	std::cout << "2.3.check - > show check is not efected:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << check[i] << std::endl;
-	}
-
-	std::cout << "__________________________________________" << std::endl;
-	std::cout << "New -> create word Array -> Alisa " << std::endl;
-	Array<char> alisa(12);
-	for (unsigned int i = 0; i < 12; i++) {
-		alisa[i] = (char)(97 + i);
-	}
-
-	Array<char> alisaJuniour(alisa);
-	
-	std::cout << "3.alisaJuniour - > alisaJuniour(alisa) " << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << alisaJuniour[i] << std::endl;
-	}
-
-	std::cout << "3.1.alisaJuniour modified = 65 + 1:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		alisaJuniour[i] = (char)65 + i;
-	}
-
-	std::cout << "3.2.alisaJuniour - > show modification:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << alisaJuniour[i] << std::endl;
-	}
-
-	std::cout << "3.3.alisa - > show alisa is not efected:" << std::endl;
-	for (unsigned int i = 0; i < 12; i++) {
-		std::cout << alisa[i] << std::endl;
+		std::cout << "3.3.alisa - > show alisa is not efected:" << std::endl;
+		for (unsigned int i = 0; i < 12; i++) {
+			std::cout << "\t" << alisa[i] << std::endl;
+		}
 	}
 
 	{
@@ -109,14 +128,14 @@ int	main(void) {
 		// bob[5] = "Hello5";
 
 		for (unsigned int i = 0; i < 6; i++) {
-			std::cout << bob[i] << std::endl;
+			std::cout << "\t" << bob[i] << std::endl;
 		}
 
 		Array<std::string> bobJuniour(bob);
 		
 		std::cout << "3.bobJuniour - > bobJuniour(bob) " << std::endl;
 		for (unsigned int i = 0; i < 6; i++) {
-			std::cout << bobJuniour[i] << std::endl;
+			std::cout << "\t" << bobJuniour[i] << std::endl;
 		}
 
 		std::cout << "3.1.bobJuniour modified -> bobJuniour[i][5] = (char)65 + i;" << std::endl;
@@ -132,12 +151,12 @@ int	main(void) {
 
 		std::cout << "3.2.bobJuniour - > show modification:" << std::endl;
 		for (unsigned int i = 0; i < 6; i++) {
-			std::cout << bobJuniour[i] << std::endl;
+			std::cout << "\t" << bobJuniour[i] << std::endl;
 		}
 
 		std::cout << "3.3.bob - > show bob is not efected:" << std::endl;
 		for (unsigned int i = 0; i < 6; i++) {
-			std::cout << bob[i] << std::endl;
+			std::cout << "\t" << bob[i] << std::endl;
 		}
 	}
 

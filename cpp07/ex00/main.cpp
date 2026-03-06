@@ -23,12 +23,52 @@ int	main(void) {
 		::swap(a, b);
 		std::cout << "a = " << a << "  /  b = " << b << std::endl;
 	}
+	{
+		float a = 548.215;	
+		float b = 12.56531;
+
+		std::cout << "a = " << a << "  /  b = " << b << std::endl;
+		::swap(a, b);
+		std::cout << "a = " << a << "  /  b = " << b << std::endl;
+	}
+	{
+		double a = 548.2155481;	
+		double b = 166512.56531;
+
+		std::cout << "a = " << a << "  /  b = " << b << std::endl;
+		::swap(a, b);
+		std::cout << "a = " << a << "  /  b = " << b << std::endl;
+	}
+	{
+		std::string a[5] = {"hello","world","how","are","you"};
+		std::string b[5] = {"world","hello","how","are","you"};
+
+		std::cout << "a = " << a << "  /  b = " << b << std::endl;
+		std::cout << "a = " << a[0] << "  /  b = " << b[0] << std::endl;
+		::swap(a[0], b[0]);
+		std::cout << "a = " << a[0] << "  /  b = " << b[0] << std::endl;
+
+	}
 
 	std::cout << "\nMIN::" << std::endl;
 
 	{	
 		int a = 5;
 		int b = 6;
+
+		std::cout << "a = " << a << "  /  b = " << b << std::endl;
+		std::cout << ::min(a, b) << std::endl;
+	}
+	{
+		float a = 548.215;	
+		float b = 12.56531;
+
+		std::cout << "a = " << a << "  /  b = " << b << std::endl;
+		std::cout << ::min(a, b) << std::endl;
+	}
+	{
+		double a = 548.2155481;	
+		double b = 166512.56531;
 
 		std::cout << "a = " << a << "  /  b = " << b << std::endl;
 		std::cout << ::min(a, b) << std::endl;
@@ -44,7 +84,7 @@ int	main(void) {
 
 	{
 		std::string a[5] = {"hello","world","how","are","you"};
-		std::string b[5] = {"hello","world","how","are","you"};
+		std::string b[5] = {"hi","there","how","are","you"};
 
 		std::cout << "a = " << a << "  /  b = " << b << std::endl;
 		std::cout << ::max(a, b) << std::endl;

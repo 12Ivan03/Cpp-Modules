@@ -18,7 +18,7 @@ void	swap(T& x, T& y) {
 }
 
 template <typename K>
-K& min(K& x, K& y) {
+K const& min(K const& x, K const& y) {
 
 	if (x < y)
 		return x;
@@ -26,7 +26,7 @@ K& min(K& x, K& y) {
 }
 
 template <typename P>
-P& max(P& x, P& y) {
+P const& max(P const& x, P const& y) {
 
 	if (x > y)
 		return x;
