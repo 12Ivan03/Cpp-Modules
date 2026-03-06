@@ -7,6 +7,7 @@
 #include <random>
 #include <iterator>
 #include <stdexcept>
+#include <bits/stdc++.h>
 #include <limits.h>
 
 class Span {

@@ -57,6 +57,25 @@ int main(void) {
 	}
 
 	std::cout << "__________________________________________________________________________" << std::endl;
+	std::cout << "Deque search: \nstd::deque<float> {1..20} -> search 6 and 21\n" << std::endl;
+	{
+		std::deque<float> d1 = {1.45, 2.53, 3.5651, 4.354, 5.659, 6.6595, 7.9785, 8.5484, 9.49848, 10.654984, 11, 12, 13, 14, 15, 16 ,17 ,18, 19, 20};
+		try
+		{
+			std::deque<float>::iterator it = easyfind(d1, 6);
+			std::cout << "deque -> Found: " << *it << std::endl;
+
+			it = easyfind(d1, 21);
+			std::cout << "deque -> Found: " << *it << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+		
+	}
+
+	std::cout << "__________________________________________________________________________" << std::endl;
 	std::cout << "list search: \nstd::list<int> {1..40} -> search 6, 21 and 65\n" << std::endl;
 	{
 		std::list<int> myList;
