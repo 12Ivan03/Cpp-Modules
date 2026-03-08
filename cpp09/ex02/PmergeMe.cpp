@@ -18,11 +18,13 @@ PmergeMe& PmergeMe::operator=(const PmergeMe &other) {
 
 PmergeMe::~PmergeMe() {};
 
+// main logic
+
 PmergeMe::PmergeMe(int argc, char *argv[]) {
 
 	validateInput(argc, argv);
 
-	printContainer(2, 1);
+	printContainer(1, 1);
 	auto startVec = std::chrono::high_resolution_clock::now();
 	_vec = sortByFordJohnsonVector(_vec);
 	auto stopVec = std::chrono::high_resolution_clock::now();
@@ -32,7 +34,7 @@ PmergeMe::PmergeMe(int argc, char *argv[]) {
 	_deq = sortByFordJohnsonDeque(_deq);
 	auto stopDeq = std::chrono::high_resolution_clock::now();
 	double durationDeq = std::chrono::duration<double>(stopDeq - startDeq).count();
-	printContainer(1, 2);
+	printContainer(2, 2);
 
 	std::cout << std::fixed << std::setprecision(6);
 	std::cout  << "Time to process a range of " 
@@ -49,74 +51,7 @@ PmergeMe::PmergeMe(int argc, char *argv[]) {
 
 };
 
-// main logic
-
-void	PmergeMe::validateInput(int argc, char *argv[]) {
-
-	if (argc <= 1)
-		throw std::runtime_error("correct input: ./Program \' shuf -i LO-HI -n N || jot -r 1 $min $max \'");
-		
-	for (int i = 1; i < argc; i++) {
-
-		std::istringstream argvString(argv[i]);
-		std::string s;
-
-		while (argvString >> s) {
-			std::istringstream conv(s);
-			long long num = 0;
-			conv >> num;
-			if (!s.empty() && s[0] == '+')
-				throw std::runtime_error("incorrect input 1 ");
-			if (conv.fail())
-				throw std::runtime_error("incorrect input 2 ");
-			std::string leftover;
-			if (conv >> leftover)
-				throw std::runtime_error("incorrect input 3 ");
-
-			if (num <= 0)
-				throw std::runtime_error("only positive numbers");
-			if (num > INT_MAX)
-				throw std::runtime_error("very large positve number");
-
-			_vec.push_back(static_cast<int>(num));
-			_deq.push_back(static_cast<int>(num));
-		}
-	}
-};
-
-std::vector<int>	PmergeMe::sortByFordJohnsonVector(std::vector<int> vecInProgress) {
-
-	if (vecInProgress.size() <= 1)
-		return vecInProgress;
-
-	std::vector<std::pair<int, int>> pairVector;
-	int		oddVecLenght = -1;
-
-	size_t i = 0;
-	for (; i + 1 < vecInProgress.size(); i += 2) {
-		int a = vecInProgress[i];
-		int b = vecInProgress[i + 1];
-		if (a >= b)
-			pairVector.push_back(std::make_pair(a, b));
-		else
-			pairVector.push_back(std::make_pair(b, a));
-	}
-
-	if (i < vecInProgress.size())
-		oddVecLenght = vecInProgress[i];
-
-	std::vector<int> lList = extractLargePairs(pairVector);
-	std::vector<int> nextLevel = sortByFordJohnsonVector(lList);
-
-	vecInProgress = insertOrder(nextLevel, pairVector);
-
-	if (oddVecLenght != -1) {
-		std::vector<int>::iterator pos = std::lower_bound(vecInProgress.begin(), vecInProgress.end(), oddVecLenght);
-		vecInProgress.insert(pos, oddVecLenght);
-	}
-
-	return vecInProgress;
-};
+//deque
 
 std::deque<int>	PmergeMe::sortByFordJohnsonDeque(std::deque<int> deqInProgress) {
 
@@ -153,8 +88,6 @@ std::deque<int>	PmergeMe::sortByFordJohnsonDeque(std::deque<int> deqInProgress) 
 	return deqInProgress;
 };
 
-// helper fuctions
-//deque
 std::deque<int>		PmergeMe::extractLargePairDeq(std::deque<std::pair<int, int>> pairDeque) {
 
 	std::deque<int> extrLargeNum;
@@ -166,9 +99,14 @@ std::deque<int>		PmergeMe::extractLargePairDeq(std::deque<std::pair<int, int>> p
 
 std::deque<int>		PmergeMe::insertDeqOrder(std::deque<int> nextLevel, std::deque<std::pair<int, int>> pairDeque) {
 
+	std::deque<size_t> jacobOrder = jacobsthalIndices<std::deque<size_t>>(pairDeque.size());
+
 	for (size_t i = 0; i < pairDeque.size(); i++) {
-		int small = pairDeque[i].second;
-		int big = pairDeque[i].first;
+
+		size_t j = jacobOrder[i];
+
+		int small = pairDeque[j].second;
+		int big = pairDeque[j].first;
 
 		std::deque<int>::iterator posBig = std::lower_bound(nextLevel.begin(), nextLevel.end(), big);
 		std::deque<int>::iterator pos = std::lower_bound(nextLevel.begin(), posBig, small);
@@ -178,13 +116,53 @@ std::deque<int>		PmergeMe::insertDeqOrder(std::deque<int> nextLevel, std::deque<
 	}
 	return nextLevel;
 };
+
 //vector
+
+std::vector<int>	PmergeMe::sortByFordJohnsonVector(std::vector<int> vecInProgress) {
+
+	if (vecInProgress.size() <= 1)
+		return vecInProgress;
+
+	std::vector<std::pair<int, int>> pairVector;
+	int		oddVecLenght = -1;
+
+	size_t i = 0;
+	for (; i + 1 < vecInProgress.size(); i += 2) {
+		int a = vecInProgress[i];
+		int b = vecInProgress[i + 1];
+		if (a >= b)
+			pairVector.push_back(std::make_pair(a, b));
+		else
+			pairVector.push_back(std::make_pair(b, a));
+	}
+
+	if (i < vecInProgress.size())
+		oddVecLenght = vecInProgress[i];
+
+	std::vector<int> lList = extractLargePairs(pairVector);
+	std::vector<int> nextLevel = sortByFordJohnsonVector(lList);
+
+	vecInProgress = insertOrder(nextLevel, pairVector);
+
+	if (oddVecLenght != -1) {
+		std::vector<int>::iterator pos = std::lower_bound(vecInProgress.begin(), vecInProgress.end(), oddVecLenght);
+		vecInProgress.insert(pos, oddVecLenght);
+	}
+
+	return vecInProgress;
+};
+
 std::vector<int>	PmergeMe::insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector) {
+		
+	std::vector<size_t> JacobOrder = jacobsthalIndices<std::vector<size_t>>(pairVector.size());
 
 	for (size_t i = 0; i < pairVector.size(); i++) {
 		
-		int small = pairVector[i].second;
-		int big = pairVector[i].first;
+		size_t j = JacobOrder[i];
+
+		int small = pairVector[j].second;
+		int big = pairVector[j].first;
 
 		std::vector<int>::iterator posBig = std::lower_bound(nextLevel.begin(), nextLevel.end(), big);
 		std::vector<int>::iterator pos = std::lower_bound(nextLevel.begin(), posBig, small);
@@ -203,7 +181,40 @@ std::vector<int>	PmergeMe::extractLargePairs(std::vector<std::pair<int, int>> pa
 	return extrLarge;
 };
 
+void	PmergeMe::validateInput(int argc, char *argv[]) {
 
+	if (argc <= 1)
+		throw std::runtime_error("correct input: ./Program \' shuf -i LO-HI -n N || jot -r 1 $min $max \'");
+		
+	for (int i = 1; i < argc; i++) {
+
+		std::istringstream argvString(argv[i]);
+		std::string s;
+
+		while (argvString >> s) {
+			std::istringstream conv(s);
+			long long num = 0;
+			conv >> num;
+			if (!s.empty() && s[0] == '+')
+				throw std::runtime_error("incorrect input 1 ");
+			if (conv.fail())
+				throw std::runtime_error("incorrect input 2 ");
+			std::string leftover;
+			if (conv >> leftover)
+				throw std::runtime_error("incorrect input 3 ");
+
+			if (num <= 0)
+				throw std::runtime_error("only positive numbers");
+			if (num > INT_MAX)
+				throw std::runtime_error("very large positve number");
+
+			_vec.push_back(static_cast<int>(num));
+			_deq.push_back(static_cast<int>(num));
+		}
+	}
+};
+
+// printng
 void	PmergeMe::printContainer(int n, int when) {
 
 	if (when == 1)
@@ -224,3 +235,113 @@ void	PmergeMe::printContainer(int n, int when) {
 	}
 };
 
+
+// helper fuctions
+// calcualtion: Jacobsthal sequence J(n) = J(n - 1) + 2*J(n - 2); exmpl: n/1, n/3, n/3 + 2 * 1 = 5, n/5 + 2 * 3 = 11, n/11 + 2 * 5 = 21, n/...
+// std::vector<size_t> PmergeMe::buildJacobsthalSequenceVector(size_t n) {
+
+// 	std::vector<size_t> jsOrder;
+
+// 	if (n == 0)
+// 		return jsOrder;
+
+// 	jsOrder.push_back(1);
+// 	if (n == 1)
+// 		return jsOrder;
+
+// 	jsOrder.push_back(3);
+// 	size_t a = 1;
+// 	size_t b = 3;
+// 	while (b < n) {
+// 		size_t next = b + 2 * a;
+// 		jsOrder.push_back(next);
+// 		a = b;
+// 		b = next;
+// 	}
+
+// 	return jsOrder;
+// };
+
+// std::vector<size_t>	PmergeMe::jacobsthalIndicesVector(size_t n) {
+		
+// 	std::vector<size_t> order;
+		
+// 	if (n == 0)
+// 		return order;
+		
+// 	order.push_back(0);
+// 	if (n == 1)
+// 		return order;
+		
+// 	// build Jacobsthal order - compare the size of the pair with the index of Jacobsthal sequence n <1 3 5 11 21...
+// 	std::vector<size_t> jacobOrder = buildJacobsthalSequenceVector(n);
+		
+// 	// Ford-Johnson inderstion order
+// 	for (size_t i = 1; i < jacobOrder.size(); i++) {
+
+// 		size_t upper = jacobOrder[i];
+// 		size_t lower = jacobOrder[i - 1];
+
+// 		if (upper > n)
+// 			upper = n;
+
+// 		for (size_t idx = upper; idx > lower; idx--) {
+// 			order.push_back(idx - 1);
+// 		}
+// 	}
+// 	return order;
+// };
+
+// std::deque<size_t> PmergeMe::buildJacobsthalSequenceDeque(size_t n) {
+
+// 	std::deque<size_t> jsOrder;
+
+// 	if (n == 0)
+// 		return jsOrder;
+
+// 	jsOrder.push_back(1);
+// 	if (n == 1)
+// 		return jsOrder;
+
+// 	jsOrder.push_back(3);
+// 	size_t a = 1;
+// 	size_t b = 3;
+// 	while (b < n) {
+// 		size_t next = b + 2 * a;
+// 		jsOrder.push_back(next);
+// 		a = b;
+// 		b = next;
+// 	}
+
+// 	return jsOrder;
+// };
+
+// std::deque<size_t>	PmergeMe::jacobsthalIndicesDeque(size_t n) {
+		
+// 	std::deque<size_t> order;
+		
+// 	if (n == 0)
+// 		return order;
+		
+// 	order.push_back(0);
+// 	if (n == 1)
+// 		return order;
+		
+// 	// build Jacobsthal order - compare the size of the pair with the index of Jacobsthal sequence n <1 3 5 11 21...
+// 	std::deque<size_t> jacobOrder = buildJacobsthalSequenceDeque(n);
+		
+// 	// Ford-Johnson inderstion order
+// 	for (size_t i = 1; i < jacobOrder.size(); i++) {
+
+// 		size_t upper = jacobOrder[i];
+// 		size_t lower = jacobOrder[i - 1];
+
+// 		if (upper > n)
+// 			upper = n;
+
+// 		for (size_t idx = upper; idx > lower; idx--) {
+// 			order.push_back(idx - 1);
+// 		}
+// 	}
+// 	return order;
+// };
