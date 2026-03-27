@@ -15,3 +15,7 @@ int main(int argc, char *argv[]) {
     
     return (0);
 }
+
+// for i in {1..100}; do
+//      shuf -i 1-100 -n 20 | tr '\n' ' ' | xargs ./PmergeMe
+// done

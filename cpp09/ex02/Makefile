@@ -1,6 +1,6 @@
 
-CC = c++
-CFLAGS =  -std=c++98 -Wall -Wextra -Werror -g3
+CXX = c++
+CXXFLAGS =  -std=c++11 -Wall -Wextra -Werror -g3
 
 SRC_FILES = main.cpp PmergeMe.cpp
 
@@ -9,11 +9,11 @@ NAME = PmergeMe
 
 all: $(NAME)
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.cpp
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(OBJ_FILES) -o $(NAME)
+	@$(CXX) $(CXXFLAGS) $(OBJ_FILES) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJ_FILES)

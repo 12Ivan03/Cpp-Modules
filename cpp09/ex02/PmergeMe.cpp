@@ -1,17 +1,18 @@
 
 #include "PmergeMe.hpp"
-#include <unistd.h>
+
 
 // OCF
 // PmergeMe::PmergeMe() {};
 
-PmergeMe::PmergeMe(const PmergeMe &other) : _vec(other._vec), _deq(other._deq) {};
+PmergeMe::PmergeMe(const PmergeMe &other) : _vec(other._vec), _deq(other._deq), _vecComparisons(other._vecComparisons) {};
 
 PmergeMe& PmergeMe::operator=(const PmergeMe &other) {
 		
 	if (this != &other) {
 		this->_vec = other._vec;
 		this->_deq = other._deq;
+		_vecComparisons = other._vecComparisons;
 	}
 	return *this;
 };
@@ -20,7 +21,7 @@ PmergeMe::~PmergeMe() {};
 
 // main logic
 
-PmergeMe::PmergeMe(int argc, char *argv[]) {
+PmergeMe::PmergeMe(int argc, char *argv[]) : _vecComparisons(0) {
 
 	validateInput(argc, argv);
 
@@ -48,6 +49,8 @@ PmergeMe::PmergeMe(int argc, char *argv[]) {
 				<< " us" 
 				<< std::endl;
 	std::cout << std::defaultfloat;
+
+	std::cout << "Comparisons : " << _vecComparisons << std::endl;
 
 };
 
@@ -126,19 +129,25 @@ std::vector<int>	PmergeMe::sortByFordJohnsonVector(std::vector<int> vecInProgres
 
 	std::vector<std::pair<int, int>> pairVector;
 	int		oddVecLenght = -1;
+	int		oddPartner = -1;
 
 	size_t i = 0;
 	for (; i + 1 < vecInProgress.size(); i += 2) {
 		int a = vecInProgress[i];
 		int b = vecInProgress[i + 1];
+		++_vecComparisons;
 		if (a >= b)
 			pairVector.push_back(std::make_pair(a, b));
 		else
 			pairVector.push_back(std::make_pair(b, a));
 	}
 
-	if (i < vecInProgress.size())
+	if (i < vecInProgress.size()) {
 		oddVecLenght = vecInProgress[i];
+		oddPartner = pairVector.back().first;
+	}
+
+	std::cout << "oddVecLenght: " << oddVecLenght << " oddPartner: " << oddPartner << std::endl;
 
 	std::vector<int> lList = extractLargePairs(pairVector);
 	std::vector<int> nextLevel = sortByFordJohnsonVector(lList);
@@ -146,7 +155,15 @@ std::vector<int>	PmergeMe::sortByFordJohnsonVector(std::vector<int> vecInProgres
 	vecInProgress = insertOrder(nextLevel, pairVector);
 
 	if (oddVecLenght != -1) {
-		std::vector<int>::iterator pos = std::lower_bound(vecInProgress.begin(), vecInProgress.end(), oddVecLenght);
+ 		// size_t partnerIdx = indexMap[oddPartner]; // free lookup, no comparisons, no lower_bound
+		// auto pos = std::lower_bound(vecInProgress.begin(), vecInProgress.begin() + partnerIdx, oddVecLenght, CountCompare(&_vecComparisons));
+		// vecInProgress.insert(pos, oddVecLenght);
+		
+		// std::vector<int>::iterator partnerPos = std::lower_bound(vecInProgress.begin(), vecInProgress.end(), oddPartner);
+        // std::vector<int>::iterator pos = std::lower_bound(vecInProgress.begin(), partnerPos, oddVecLenght, CountCompare(&_vecComparisons));
+        // vecInProgress.insert(pos, oddVecLenght);
+
+		std::vector<int>::iterator pos = std::lower_bound(vecInProgress.begin(), vecInProgress.end(), oddVecLenght,CountCompare(&_vecComparisons));
 		vecInProgress.insert(pos, oddVecLenght);
 	}
 
@@ -155,21 +172,52 @@ std::vector<int>	PmergeMe::sortByFordJohnsonVector(std::vector<int> vecInProgres
 
 std::vector<int>	PmergeMe::insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector) {
 		
+	// std::cout << " C jacobsthalIndices ->pairVector.size():  "<< pairVector.size() << std::endl;
+
 	std::vector<size_t> JacobOrder = jacobsthalIndices<std::vector<size_t>>(pairVector.size());
 
-	for (size_t i = 0; i < pairVector.size(); i++) {
+	std::unordered_map<int, size_t> bigIndex;
+    for (size_t i = 0; i < nextLevel.size(); i++)
+        bigIndex[nextLevel[i]] = i;
+
+    for (size_t i = 0; i < pairVector.size(); i++) {
+
+        size_t j = JacobOrder[i];
+
+        int small = pairVector[j].second;
+        int big   = pairVector[j].first;
+
+        size_t bigIdx = bigIndex[big];
+
+        // If big is at index 0, small must be smaller than everything, insert at front
+        if (bigIdx == 0) {
+            nextLevel.insert(nextLevel.begin(), small);
+            for (auto& entry : bigIndex)
+                entry.second++;
+        } else {
+            auto pos = std::lower_bound(nextLevel.begin(), nextLevel.begin() + bigIdx, small, CountCompare(&_vecComparisons));
+            size_t insertIdx = pos - nextLevel.begin();
+            nextLevel.insert(pos, small);
+            for (auto& entry : bigIndex)
+                if (entry.second >= insertIdx)
+                    entry.second++;
+        }
+    }
+    return nextLevel;
+
+	// for (size_t i = 0; i < pairVector.size(); i++) {
 		
-		size_t j = JacobOrder[i];
+	// 	size_t j = JacobOrder[i];
 
-		int small = pairVector[j].second;
-		int big = pairVector[j].first;
+	// 	int small = pairVector[j].second;
+	// 	int big = pairVector[j].first;
 
-		std::vector<int>::iterator posBig = std::lower_bound(nextLevel.begin(), nextLevel.end(), big);
-		std::vector<int>::iterator pos = std::lower_bound(nextLevel.begin(), posBig, small);
+	// 	std::vector<int>::iterator posBig = std::lower_bound(nextLevel.begin(), nextLevel.end(), big);
+	// 	std::vector<int>::iterator pos = std::lower_bound(nextLevel.begin(), posBig, small, CountCompare(&_vecComparisons));
 
-		nextLevel.insert(pos, small);
-	}
-	return nextLevel;
+	// 	nextLevel.insert(pos, small);
+	// }
+	// return nextLevel;
 };
 
 std::vector<int>	PmergeMe::extractLargePairs(std::vector<std::pair<int, int>> pairVector) {
@@ -234,114 +282,3 @@ void	PmergeMe::printContainer(int n, int when) {
 
 	}
 };
-
-
-// helper fuctions
-// calcualtion: Jacobsthal sequence J(n) = J(n - 1) + 2*J(n - 2); exmpl: n/1, n/3, n/3 + 2 * 1 = 5, n/5 + 2 * 3 = 11, n/11 + 2 * 5 = 21, n/...
-// std::vector<size_t> PmergeMe::buildJacobsthalSequenceVector(size_t n) {
-
-// 	std::vector<size_t> jsOrder;
-
-// 	if (n == 0)
-// 		return jsOrder;
-
-// 	jsOrder.push_back(1);
-// 	if (n == 1)
-// 		return jsOrder;
-
-// 	jsOrder.push_back(3);
-// 	size_t a = 1;
-// 	size_t b = 3;
-// 	while (b < n) {
-// 		size_t next = b + 2 * a;
-// 		jsOrder.push_back(next);
-// 		a = b;
-// 		b = next;
-// 	}
-
-// 	return jsOrder;
-// };
-
-// std::vector<size_t>	PmergeMe::jacobsthalIndicesVector(size_t n) {
-		
-// 	std::vector<size_t> order;
-		
-// 	if (n == 0)
-// 		return order;
-		
-// 	order.push_back(0);
-// 	if (n == 1)
-// 		return order;
-		
-// 	// build Jacobsthal order - compare the size of the pair with the index of Jacobsthal sequence n <1 3 5 11 21...
-// 	std::vector<size_t> jacobOrder = buildJacobsthalSequenceVector(n);
-		
-// 	// Ford-Johnson inderstion order
-// 	for (size_t i = 1; i < jacobOrder.size(); i++) {
-
-// 		size_t upper = jacobOrder[i];
-// 		size_t lower = jacobOrder[i - 1];
-
-// 		if (upper > n)
-// 			upper = n;
-
-// 		for (size_t idx = upper; idx > lower; idx--) {
-// 			order.push_back(idx - 1);
-// 		}
-// 	}
-// 	return order;
-// };
-
-// std::deque<size_t> PmergeMe::buildJacobsthalSequenceDeque(size_t n) {
-
-// 	std::deque<size_t> jsOrder;
-
-// 	if (n == 0)
-// 		return jsOrder;
-
-// 	jsOrder.push_back(1);
-// 	if (n == 1)
-// 		return jsOrder;
-
-// 	jsOrder.push_back(3);
-// 	size_t a = 1;
-// 	size_t b = 3;
-// 	while (b < n) {
-// 		size_t next = b + 2 * a;
-// 		jsOrder.push_back(next);
-// 		a = b;
-// 		b = next;
-// 	}
-
-// 	return jsOrder;
-// };
-
-// std::deque<size_t>	PmergeMe::jacobsthalIndicesDeque(size_t n) {
-		
-// 	std::deque<size_t> order;
-		
-// 	if (n == 0)
-// 		return order;
-		
-// 	order.push_back(0);
-// 	if (n == 1)
-// 		return order;
-		
-// 	// build Jacobsthal order - compare the size of the pair with the index of Jacobsthal sequence n <1 3 5 11 21...
-// 	std::deque<size_t> jacobOrder = buildJacobsthalSequenceDeque(n);
-		
-// 	// Ford-Johnson inderstion order
-// 	for (size_t i = 1; i < jacobOrder.size(); i++) {
-
-// 		size_t upper = jacobOrder[i];
-// 		size_t lower = jacobOrder[i - 1];
-
-// 		if (upper > n)
-// 			upper = n;
-
-// 		for (size_t idx = upper; idx > lower; idx--) {
-// 			order.push_back(idx - 1);
-// 		}
-// 	}
-// 	return order;
-// };
