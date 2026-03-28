@@ -18,21 +18,23 @@ class PmergeMe {
 	private:
 		std::vector<int> _vec;
 		std::deque<int> _deq;
-		size_t _vecComparisons;
+		size_t vecComparisons;
 
-		void				validateInput(int argc, char *argv[]);
-		void				printContainer(int n, int when);
-		std::vector<int>	sortByFordJohnsonVector(std::vector<int> sortVec);
-		std::vector<int>	extractLargePairs(std::vector<std::pair<int, int>> pairVector);
-		std::vector<int>	insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector);
-		std::deque<int>		sortByFordJohnsonDeque(std::deque<int> deqInProgress);
-		std::deque<int>		extractLargePairDeq(std::deque<std::pair<int, int>> pairDeque);		
-		std::deque<int>		insertDeqOrder(std::deque<int> nextLevel, std::deque<std::pair<int, int>> pairDeque);
+		void									validateInput(int argc, char *argv[]);
+		void									printContainer(int which, int when);
+		std::vector<int>						sortByFordJohnsonVector(std::vector<int> sortVec);
+		std::vector<int>						extractLargePairs(std::vector<std::pair<int, int>> pairVector);
+		std::vector<int>						insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector);
+		std::deque<int>							sortByFordJohnsonDeque(std::deque<int> sortDeq);
+		std::deque<int>							extractLargePairsDeq(std::deque<std::pair<int, int>> pairDeque);
+		std::deque<int>							insertDeqOrder(std::deque<int> nextLevel, std::deque<std::pair<int, int>> pairDeque);
+		std::vector<std::pair<int, int>>		reorderPairsBySortedWinnersVec(std::vector<std::pair<int, int>> pairVector, std::vector<int> sortedWinners);
+		std::deque<std::pair<int, int>>			reorderPairsBySortedWinnersDeq(std::deque<std::pair<int, int>> pairDeque, std::deque<int> sortedWinners);
 
-		template <typename C>
-		C buildJacobsthalSequence(size_t n) {
+		template <typename J>
+		J buildJacobsthalSequence(size_t n) {
 
-			C jsOrder;
+			J jsOrder;
 
 			if (n == 0)
 				return jsOrder;
@@ -54,56 +56,54 @@ class PmergeMe {
 			return jsOrder;
 		};
 
-		template <typename C>
-		C jacobsthalIndices(size_t n) {
-				
-			C order;
-			
-			if (n == 0)
-				return order;
-				
-			order.push_back(0);
-			if (n == 1)
-				return order;
-				
-			// build Jacobsthal order - compare the size of the pair with the index of Jacobsthal sequence n <1 3 5 11 21...
-			C jacobOrder = buildJacobsthalSequence<C>(n);
-			
-			// Ford-Johnson inderstion order
-			for (size_t i = 1; i < jacobOrder.size(); i++) {
+		template <typename J>
+		J jacobsthalSpreadIndices(size_t n) {
 
-				size_t upper = jacobOrder[i];
-				size_t lower = jacobOrder[i - 1];
+			J completeJcIndecies;
+
+			if (n == 0)
+				return completeJcIndecies;
+
+			completeJcIndecies.push_back(0);
+			if (n == 1)
+				return completeJcIndecies;
+
+			J jacobsthalOrder = buildJacobsthalSequence<J>(n);
+
+			for (size_t i = 1; i < jacobsthalOrder.size(); i ++) {
+
+				size_t upper = jacobsthalOrder[i];
+				size_t lower = jacobsthalOrder[i - 1];
 
 				if (upper > n)
 					upper = n;
-
+				
 				for (size_t idx = upper; idx > lower; idx--) {
-					order.push_back(idx - 1);
+					completeJcIndecies.push_back(idx - 1);
 				}
 			}
 
-			return order;
+			return completeJcIndecies;
 		};
 
 	public:
 		PmergeMe() = delete;
-		PmergeMe(int argc, char *argv[]);
+		PmergeMe(int argc, char **argv[]);
 		PmergeMe(const PmergeMe &other);
 		PmergeMe &operator=(const PmergeMe &other);
 		~PmergeMe();
-		
+
 };
 
 struct CountCompare {
-    size_t* counter;
+	size_t *counter;
 
-    CountCompare(size_t* c) : counter(c) {}
+	CountCompare(size_t *c) : counter(c) {}
 
-    bool operator()(int lhs, int rhs) const {
-        ++(*counter);
-        return lhs < rhs;
-    }
+	bool operator()(int lhs, int rhs) const {
+		++(*counter);
+		return lhs < rhs;
+	}
 };
 
 #endif
