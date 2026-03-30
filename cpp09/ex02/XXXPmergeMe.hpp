@@ -1,6 +1,6 @@
 
-#ifndef PMERGEME_HPP
-#define PMERGEME_HPP
+#ifndef XXPMERGEME_HPP
+#define XXPMERGEME_HPP
 
 #include <iostream>
 #include <vector>

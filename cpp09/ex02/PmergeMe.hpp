@@ -11,24 +11,24 @@
 #include <climits>
 #include <iomanip>
 #include <algorithm>
-#include <unordered_map>
+// #include <unordered_map>
 
 class PmergeMe {
 
 	private:
 		std::vector<int> _vec;
 		std::deque<int> _deq;
-		size_t vecComparisons;
 
 		void									validateInput(int argc, char *argv[]);
-		void									printContainer(int which, int when);
-		std::vector<int>						sortByFordJohnsonVector(std::vector<int> sortVec);
-		std::vector<int>						extractLargePairs(std::vector<std::pair<int, int>> pairVector);
-		std::vector<int>						insertOrder(std::vector<int> nextLevel, std::vector<std::pair<int, int>> pairVector);
+		void									printContainer(int whichTemplate, int when);
+		void									printDurationTime(double totalDurationTimeVec, double totalDurationTimeDeq);
+		std::vector<int>						sortByFordJohnsonVector(std::vector<int> values);
+		std::vector<int>						extractWinners(std::vector<std::pair<int, int>> pairValuesVec);
+		std::vector<int>						insertOrder(std::vector<int> mainChain, std::vector<std::pair<int, int>> pairValuesVec);
 		std::deque<int>							sortByFordJohnsonDeque(std::deque<int> sortDeq);
-		std::deque<int>							extractLargePairsDeq(std::deque<std::pair<int, int>> pairDeque);
+		std::deque<int>							extractWinnersDeq(std::deque<std::pair<int, int>> pairDeque);
 		std::deque<int>							insertDeqOrder(std::deque<int> nextLevel, std::deque<std::pair<int, int>> pairDeque);
-		std::vector<std::pair<int, int>>		reorderPairsBySortedWinnersVec(std::vector<std::pair<int, int>> pairVector, std::vector<int> sortedWinners);
+		std::vector<std::pair<int, int>>		reorderPairsBySortedWinnersVec(std::vector<std::pair<int, int>> pairValuesVec, std::vector<int> mainChain);
 		std::deque<std::pair<int, int>>			reorderPairsBySortedWinnersDeq(std::deque<std::pair<int, int>> pairDeque, std::deque<int> sortedWinners);
 
 		template <typename J>
@@ -88,22 +88,22 @@ class PmergeMe {
 
 	public:
 		PmergeMe() = delete;
-		PmergeMe(int argc, char **argv[]);
+		PmergeMe(int argc, char *argv[]);
 		PmergeMe(const PmergeMe &other);
 		PmergeMe &operator=(const PmergeMe &other);
 		~PmergeMe();
 
 };
 
-struct CountCompare {
-	size_t *counter;
+// struct CountCompare {
+// 	size_t *counter;
 
-	CountCompare(size_t *c) : counter(c) {}
+// 	CountCompare(size_t *c) : counter(c) {}
 
-	bool operator()(int lhs, int rhs) const {
-		++(*counter);
-		return lhs < rhs;
-	}
-};
+// 	bool operator()(int lhs, int rhs) const {
+// 		++(*counter);
+// 		return lhs < rhs;
+// 	}
+// };
 
 #endif
