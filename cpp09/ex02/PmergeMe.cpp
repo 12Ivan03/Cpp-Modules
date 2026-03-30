@@ -3,20 +3,21 @@
 
 // OCF
 
-PmergeMe::PmergeMe(const PmergeMe &other) : _vec(other._vec), _deq(other._deq) {};
+PmergeMe::PmergeMe(const PmergeMe &other) : _vec(other._vec), _deq(other._deq), _vecComparisons(other._vecComparisons) {};
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
 
 	if (this != &other) {
 		this->_vec = other._vec;
 		this->_deq = other._deq;
+		this->_vecComparisons = other._vecComparisons;
 	}
 	return *this;
 };
 
 PmergeMe::~PmergeMe() {};
  
-PmergeMe::PmergeMe(int argc, char *argv[]){
+PmergeMe::PmergeMe(int argc, char *argv[]) : _vecComparisons(0) {
 
 	validateInput(argc, argv);
 
@@ -45,12 +46,12 @@ std::vector<int>						PmergeMe::sortByFordJohnsonVector(std::vector<int> values)
 
 	std::vector<std::pair<int, int>> pairValuesVec;
 	int oddValue = -1;
-	// int oddPartnerValue = -1;
 
 	size_t i = 0;
 	for (; i + 1 < values.size(); i += 2) {
 		int a = values[i];
 		int b = values[i + 1];
+		++_vecComparisons;
 		if(a >= b)
 			pairValuesVec.push_back(std::make_pair(a, b));
 		else
@@ -59,7 +60,6 @@ std::vector<int>						PmergeMe::sortByFordJohnsonVector(std::vector<int> values)
 
 	if (i < values.size()) {
 		oddValue = values[i];
-		// oddPartnerValue = pairValuesVec.back().first;
 	}
 
 	std::vector<int> winnersList = extractWinners(pairValuesVec);
@@ -70,18 +70,19 @@ std::vector<int>						PmergeMe::sortByFordJohnsonVector(std::vector<int> values)
 	values = insertOrder(mainChain, pairValuesVec);
 
 	if (oddValue != -1) {
-
-		// size_t partnerIdx = 0;
-		// while (partnerIdx < values.size() && values[partnerIdx] != oddPartnerValue)
-		// 	partnerIdx++;
-		std::vector<int>::iterator pos = std::lower_bound(values.begin(), values.end(), oddValue);
+		std::vector<int>::iterator pos = std::lower_bound(values.begin(), values.end(), oddValue, CountCompare(&_vecComparisons));
 		values.insert(pos, oddValue);
 	}
 
 	return values;
 };
+	// int oddPartnerValue = -1;		
+	// oddPartnerValue = pairValuesVec.back().first;
+	// size_t partnerIdx = 0;
+	// while (partnerIdx < values.size() && values[partnerIdx] != oddPartnerValue)
+	// 	partnerIdx++;
 
-std::vector<int>						PmergeMe::extractWinners(std::vector<std::pair<int, int>> pairValuesVec) {
+std::vector<int>	PmergeMe::extractWinners(std::vector<std::pair<int, int>> pairValuesVec) {
 
 	std::vector<int> winners;
 
@@ -91,7 +92,7 @@ std::vector<int>						PmergeMe::extractWinners(std::vector<std::pair<int, int>> 
 	return winners;
 };
 
-std::vector<int>						PmergeMe::insertOrder(std::vector<int> mainChain, std::vector<std::pair<int, int>> pairValuesVec) {
+std::vector<int>	PmergeMe::insertOrder(std::vector<int> mainChain, std::vector<std::pair<int, int>> pairValuesVec) {
 
 	std::vector<int> mChain;
 	std::vector<size_t> bigPos;
@@ -119,7 +120,7 @@ std::vector<int>						PmergeMe::insertOrder(std::vector<int> mainChain, std::vec
 		int small = pairValuesVec[j].second;
 		size_t bound = bigPos[j];
 
-		std::vector<int>::iterator pos = std::lower_bound(mChain.begin(), mChain.begin() + bound, small);
+		std::vector<int>::iterator pos = std::lower_bound(mChain.begin(), mChain.begin() + bound, small, CountCompare(&_vecComparisons));
 
 		size_t insertIndex = pos - mChain.begin();
 		mChain.insert(pos, small);
@@ -162,7 +163,6 @@ std::deque<int>							PmergeMe::sortByFordJohnsonDeque(std::deque<int> values) {
 
 	std::deque<std::pair<int, int>> pairValuesVec;
 	int oddValue = -1;
-	// int oddPartnerValue = -1;
 
 	size_t i = 0;
 	for (; i + 1 < values.size(); i += 2) {
@@ -176,7 +176,6 @@ std::deque<int>							PmergeMe::sortByFordJohnsonDeque(std::deque<int> values) {
 
 	if (i < values.size()) {
 		oddValue = values[i];
-		// oddPartnerValue = pairValuesVec.back().first;
 	}
 
 	std::deque<int> winnersList = extractWinnersDeq(pairValuesVec);
@@ -187,16 +186,17 @@ std::deque<int>							PmergeMe::sortByFordJohnsonDeque(std::deque<int> values) {
 	values = insertDeqOrder(mainChain, pairValuesVec);
 
 	if (oddValue != -1) {
-
-		// size_t partnerIdx = 0;
-		// while (partnerIdx < values.size() && values[partnerIdx] != oddPartnerValue)
-		// 	partnerIdx++;
 		std::deque<int>::iterator pos = std::lower_bound(values.begin(), values.end(), oddValue);
 		values.insert(pos, oddValue);
 	}
 
 	return values;
 };
+// int oddPartnerValue = -1;
+// oddPartnerValue = pairValuesVec.back().first;
+// size_t partnerIdx = 0;
+// while (partnerIdx < values.size() && values[partnerIdx] != oddPartnerValue)
+// 	partnerIdx++;
 
 std::deque<int>							PmergeMe::extractWinnersDeq(std::deque<std::pair<int, int>> pairValuesDeq) {
 
@@ -269,7 +269,6 @@ std::deque<std::pair<int, int>>			PmergeMe::reorderPairsBySortedWinnersDeq(std::
 };
 
 
-
 // helper functions: validate, prints
 
 void PmergeMe::validateInput(int argc, char *argv[]) {
@@ -287,7 +286,7 @@ void PmergeMe::validateInput(int argc, char *argv[]) {
 			long long num = 0;
 			iss >> num;
 
-			if (!token.empty() && !std::isdigit(token[0]))
+			if (!token.empty() && !std::isdigit(static_cast<unsigned char>(token[0])))
 				throw std::runtime_error("incorrect input");
 			if (iss.fail())
 				throw std::runtime_error("incorrect input: iss fail");
@@ -310,7 +309,7 @@ void PmergeMe::validateInput(int argc, char *argv[]) {
 
 };
 
-// print
+// prints
 void	PmergeMe::printContainer(int whichTemplate, int when) {
 
 	if (when == 1)
@@ -347,7 +346,7 @@ void	PmergeMe::printDurationTime(double totalDurationTimeVec, double totalDurati
 				<< " us" << std::endl;
 
 	std::cout << std::defaultfloat;
-
 };
+
 // std::cout << "Comparisons : " << _vecComparisons << std::endl;
 // PmergeMe::printContainer(2, 2);

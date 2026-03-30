@@ -18,6 +18,7 @@ class PmergeMe {
 	private:
 		std::vector<int> _vec;
 		std::deque<int> _deq;
+		size_t _vecComparisons;
 
 		void									validateInput(int argc, char *argv[]);
 		void									printContainer(int whichTemplate, int when);
@@ -95,15 +96,15 @@ class PmergeMe {
 
 };
 
-// struct CountCompare {
-// 	size_t *counter;
+struct CountCompare {
+	size_t *counter;
 
-// 	CountCompare(size_t *c) : counter(c) {}
+	CountCompare(size_t *c) : counter(c) {}
 
-// 	bool operator()(int lhs, int rhs) const {
-// 		++(*counter);
-// 		return lhs < rhs;
-// 	}
-// };
+	bool operator()(int lhs, int rhs) const {
+		++(*counter);
+		return lhs < rhs;
+	}
+};
 
 #endif
